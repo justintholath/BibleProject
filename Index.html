@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head> 
+  <title>BSB V1.1 - Study Version</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html {font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+body {font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.42857143;color:#333;background-color:#fff}
+.jtxt {margin:5px; padding:10px;}
+.jchk {width:25px; height:25px;}
+table {width:100%}
+table, th, td {border:1px solid White; border-collapse: collapse; padding:8px;}
+th {text-align: center;}
+td.a50 {text-align: center; width:50%; background-color:#908A74}
+td.a80 {text-align: center; width:80%; background-color:#908A74}
+td.a100 {text-align: center; width:100%; background-color:#908A74}
+td.c16 {text-align: center; width:16%; background-color:#d9edf7}
+td.c20 {text-align: center; width:20%; background-color:#d9edf7}
+td.c25 {text-align: center; width:25%; background-color:#d9edf7}
+td.c50 {text-align: center; width:50%; background-color:#d9edf7}
+td.c100 {text-align: center; width:100%; background-color:#d9edf7}
+td.c10 {text-align: center; width:10%; background-color:#d9edf7}
+td.g20 {text-align: center; width:20%; background-color:#FFC300}
+td.g50 {text-align: center; width:50%; background-color:#FFC300}
+td.o10 {text-align: center; width:10%; background-color:#FFE997}
+td.o20 {text-align: center; width:20%; background-color:#FFE997}
+td.o25 {text-align: center; width:25%; background-color:#FFE997}
+td.o50 {text-align: center; width:50%; background-color:#FFE997}
+td.o60 {text-align: center; width:80%; background-color:#FFE997}
+td.o100 {text-align: center; width:100%; background-color:#FFE997}
+td.v10 {text-align: center; width:10%; background-color:#EAECEE}
+td.v50 {text-align: center; width:10%; background-color:#EAECEE}
+td.l20 {text-align: left; width:20%; background-color:#d9edf7}
+td.l25 {text-align: left; width:25%; background-color:#d9edf7}
+td.l100 {text-align: left; width:100%; background-color:#d9edf7}
+td.w10 {text-align: center; width:10%; background-color:#FFFFFF}
+td.w50 {text-align: center; width:50%; background-color:#FFFFFF}
+td.w80 {text-align: center; width:80%; background-color:#FFFFFF}
+td.wl80 {text-align: left; width:80%; background-color:#FFFFFF}
+hr {border-color:#EAECEE}
+mark{padding:.2em;background-color:#fcf8e3}
+markblue{padding:.2em;background-color:#fcf8e3;color:blue;}
+markred{padding:.2em;background-color:#fcf8e3;color:red;}
+h5 {width:100%; text-align:left; border-bottom: 1px solid #EAECEE; line-height:0.1em; margin:10px 0 5px;}
+h5 span {background:#fff; padding:0 2px;}
+
+:target {
+    display: block;    
+    position: relative;     
+    top: -100px;
+    visibility: hidden;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+</head><body>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>All Versions</p>
+    <span id="modal_data">test</span>
+  </div>
+</div>
+
+<div style="position:fixed; top:0; width:100%">
+	<div id="hdr_tbl" style="width:100%"></div>
+</div>
+<div id="Top"></div>
+<div id="select_option" style="display:none; width:100%">
+  <br><br><br>
+  <table><tr>
+  <td class="c50" onclick="Introductionfn()"><b>Home</b></td>
+  <td class="c50" onclick="disp_bible_help()"><b>Help</b></td>
+  </tr></table>
+  <br><br><br>
+  <table><tr>
+  <th style="color:blue;" colspan="5">Choose the version to use</th>
+  </tr><tr>
+  <td class="l25">
+    <input id="opt_bsb" type="checkbox" class="jchk">BSB
+  </td>
+  <td class="l25">
+    <input id="opt_web" type="checkbox" class="jchk">WEB
+  </td>
+  <td class="l25">
+    <input id="opt_kjv" type="checkbox" class="jchk">KJV
+  </td>
+  <td class="l25">
+    <input id="opt_ylt" type="checkbox" class="jchk">YLT
+  </td>
+  </tr><tr>
+  <td class="l25">
+    <input id="opt_lxx" type="checkbox" class="jchk">LXX
+  </td>
+  <td class="l25">
+    <input id="opt_nte" type="checkbox" class="jchk">NOTES
+  </td>
+  <td></td>
+  <td></td>
+  </tr>
+  </table>
+  
+  <hr>
+  
+  <table><tr>
+  <th style="color:blue;" colspan="5">Choose the parallel version</th>
+  </tr><tr>
+  <td class="l25">
+    <input id="par_kjv" type="checkbox" class="jchk">KJV
+  </td>
+  <td class="l25">
+    <input id="par_web" type="checkbox" class="jchk">WEB
+  </td>
+  <td class="l25">
+    <input id="par_ylt" type="checkbox" class="jchk">YLT
+  </td>
+  <td></td>
+  </tr>
+  </table>
+
+  <hr>
+  
+  <table><tr>
+  <td class="o50" onclick="hide_select_option()"><b>Cancel</b>
+  </td>
+  <td class="g50" onclick="change_option()"><b>Apply</b>
+  </td>
+  </tr>
+  </table>
+
+
+</div>
+<div id="disp_tbl"></div>
+<div class="jtxt" id="srch_results" style="display:none;"></div>
+<div class="jtxt" id="disp_txt"></div>
+<div style="position:fixed; bottom:0; width:100%">
+	<div id="btm_tbl" style="width:100%"></div>
+</div>
+
+<script>
+
+var var_opt_web = document.getElementById("opt_web");
+var var_opt_kjv = document.getElementById("opt_kjv");
+var var_opt_bsb = document.getElementById("opt_bsb");
+var var_opt_ylt = document.getElementById("opt_ylt");
+var var_opt_lxx = document.getElementById("opt_lxx");
+var var_opt_nte = document.getElementById("opt_nte");
+
+var var_par_kjv = document.getElementById("par_kjv");
+var var_par_web = document.getElementById("par_web");
+var var_par_ylt = document.getElementById("par_ylt");
+
+var var_coordinates = "01-001";
+var var_story = "101:01:01:01";
+var foption = "";
+var read_mode = "";
+
+//alert("loading scripts")
+
+</script>
+
+<script src="web_scripts_js/init_load.js"></script>
+<script src="web_scripts_js/options.js"></script>
+<script src="web_scripts_js/main_scripts.js"></script>
+<script src="web_scripts_js/offsets_n_counts.js"></script>
+<script src="web_scripts_js/story_scripts.js"></script>
+<script src="web_bibles_js/story_table.js"></script>
+<script src="web_bibles_js/text_web.js"></script>
+
+
+<script>
+/* When verson incremented, update remaining_scripts and story_scripts */
+
+if(lsTest()) 
+{
+    var_coordinates = localStorage.getItem("jbsb_v11_coordinates");
+    if (var_coordinates == null) {var_coordinates = "01-001";};
+    var_story = localStorage.getItem("jbsb_v11_story_coordinates");
+    if (var_story == null) {var_story = "101:01:01:01";};
+
+    var header_text = localStorage.getItem("jbsb_v11_header_table");
+    var bottom_text = localStorage.getItem("jbsb_v11_bottom_table");
+    var body_text = localStorage.getItem("jbsb_v11_body_text");
+    var option_text = localStorage.getItem("jbsb_v11_foption");
+    if  (body_text != null && header_text != null && bottom_text != null && option_text!= null) 
+    {
+        document.getElementById("hdr_tbl").innerHTML = header_text;
+        document.getElementById("btm_tbl").innerHTML = bottom_text;
+        document.getElementById("disp_txt").innerHTML = body_text;
+        foption = option_text;
+        //alert("load 1:" + foption);
+        var_opt_web.checked = false;
+    	var_opt_kjv.checked = false;
+    	var_opt_bsb.checked = false;
+    	var_opt_ylt.checked = false;
+    	var_opt_lxx.checked = false;
+    	var_opt_nte.checked = false;
+    	var_par_kjv.checked = false;
+    	var_par_web.checked = false;
+    	var_par_ylt.checked = false;
+        
+    	if  (foption.substring(0,5).includes("w")) {var_opt_web.checked = true}
+    	if  (foption.substring(0,5).includes("k")) {var_opt_kjv.checked = true}
+    	if  (foption.substring(0,5).includes("b")) {var_opt_bsb.checked = true}
+    	if  (foption.substring(0,5).includes("y")) {var_opt_ylt.checked = true}
+    	if  (foption.substring(0,5).includes("l")) {var_opt_lxx.checked = true}
+    	if  (foption.substring(5,6) == "n") {var_opt_nte.checked = true}
+    	if  (foption.substring(6,9).includes("k")) {var_par_kjv.checked = true}
+    	if  (foption.substring(6,9).includes("w")) {var_par_web.checked = true}
+    	if  (foption.substring(0,6).includes("y")) {var_par_ylt.checked = true}
+    	read_mode = foption.substring(9,10)
+       // alert(1)
+    }
+    else
+    {
+		Introductionfn();
+        //alert(2)
+    };
+}
+else {
+	Introductionfn();
+    //alert(3)
+};
+
+function lsTest(){
+    var test = 'test';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
+
+// Get the modal
+var modal = document.getElementById("myModal");
+var txt_modal = document.getElementById("modal_data");
+// Get the <span> element that closes the modal
+var spanmodal = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+spanmodal.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<script src="web_bibles_js/text_kjv.js" async></script>
+<script src="web_bibles_js/text_ylt.js" async></script>
+<script src="web_bibles_js/text_bsb.js" async></script>
+<script src="web_bibles_js/text_lxx.js" async></script>
+<script src="web_bibles_js/text_notes.js" async></script>
+<script src="web_bibles_js/text_xref.js" async></script>
+
+</body></html>
