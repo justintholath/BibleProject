@@ -38,13 +38,11 @@ function chapter_open(x_b_no, x_c_no) {
 function build_hdr(book_no, chap_no, maxchap, maxverse) {
 	var book_name = fetch_name(book_no);
     var x = '<table><tr>';
-    x += ' <td class="c14" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
-    x += ' <td class="c14" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
-    x += ' <td class="c14" onclick="verse_tbl(' + maxverse + ')">1 - ' + maxverse + '</td>';
-    x += ' <td class="c14" onclick="option_display()">Settings</td>';
-    x += ' <td class="c14" onclick="Introductionfn()">Home</td>';
-    x += ' <td class="c14" onclick="story_resume(1)">' + story_names(1) +'</td>';
-    x += ' <td class="c14" onclick="disp_bible_help()">Help</td>';
+    x += ' <td class="c20" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
+    x += ' <td class="c20" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
+    x += ' <td class="c20" onclick="option_display()">Settings</td>';
+    x += ' <td class="c20" onclick="Introductionfn()">Home</td>';
+    x += ' <td class="c20" onclick="disp_bible_help()">Help</td>';
     x += '</tr></table>';
     document.getElementById("hdr_tbl").innerHTML = x;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
@@ -56,59 +54,54 @@ function build_tlr(book_no, chap_no, maxchap, maxverse) {
 	var y = '<table><tr>';
     switch (read_mode) {
     case 1:
-        y += ' <td class="v14" onclick="Option(' + '1' + ')"><b>Option 1</b></td>';
-        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
-        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
         if (var_opt1_nte.checked) {
-            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
         } else {
-            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
         };
         break;
     case 2:
-        y += ' <td class="c14" onclick="Option(' + '1' + ')">Option 1</td>';
-        y += ' <td class="v14" onclick="Option(' + '2' + ')"><b>Option 2</b></td>';
-        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode 1</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
         if (var_opt2_nte.checked) {
-            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
         } else {
-            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
         };
         break;
     case 3:
-        y += ' <td class="c14" onclick="Option(' + '1' + ')">Option 1</td>';
-        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
-        y += ' <td class="v14" onclick="Option(' + '3' + ')"><b>Option 3</b></td>';
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode 1</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
         if (var_opt3_nte.checked) {
-            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
         } else {
-            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
         };
         break;
     default:
         read_mode = 1;
-        y += ' <td class="v14" onclick="Option(' + '1' + ')"><b>Option 1</b></td>';
-        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
-        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
         if (var_opt1_nte.checked) {
-            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
         } else {
-            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
         };
         break;
     };
-    y += ' <td class="c14" onclick="story_resume(2)">' + story_names(2) +'</td>';
     if (chap_no == 1) {
-		y += ' <td class="v14"></td>';
+		y += ' <td class="v20"></td>';
 	}
 	else {
-        y += ' <td class="c14" onclick="chapter_open(' + book_no + ',' + prevchap + ')">Prev</td>';
+        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + prevchap + ')">Prev</td>';
     };
     if  (chap_no == maxchap) {
-        y += ' <td class="v14"></td>';
+        y += ' <td class="v20"></td>';
     }
     else {
-        y += ' <td class="c14" onclick="chapter_open(' + book_no + ',' + nextchap + ')">Next</td>';
+        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + nextchap + ')">Next</td>';
     };
     y += '</tr></table>';
     document.getElementById("btm_tbl").innerHTML = y;
