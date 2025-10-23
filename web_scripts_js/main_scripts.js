@@ -25,8 +25,9 @@ function chapter_open(x_b_no, x_c_no) {
     if  (x_c_no == 0) {x_c_no = 1}
     var maxverse = verse_max(x_b_no, x_c_no);
     build_hdr(x_b_no, x_c_no, maxchap, maxverse);
+    fetch_chapter(x_b_no, x_c_no, maxverse);
+    // fetch_chapter sets the flags which are used in the trailer. So, the order here is important
     build_tlr(x_b_no, x_c_no, maxchap, maxverse);
-    fetch_All(x_b_no, x_c_no, maxverse);
     if (disp_tbl_flag == 1) {
         chapter_tbl(x_b_no,maxchap)
     };
@@ -37,12 +38,13 @@ function chapter_open(x_b_no, x_c_no) {
 function build_hdr(book_no, chap_no, maxchap, maxverse) {
 	var book_name = fetch_name(book_no);
     var x = '<table><tr>';
-    x += ' <td class="c16" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
-    x += ' <td class="c16" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
-    x += ' <td class="c16" onclick="verse_tbl(' + maxverse + ')">1 - ' + maxverse + '</td>';
-    x += ' <td class="c16" onclick="option_display()">Option</td>';
-    x += ' <td class="c16" onclick="notesfn()">Notes</td>';
-    x += ' <td class="c16" onclick="story_resume(0)">Go to Story</td>';
+    x += ' <td class="c14" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
+    x += ' <td class="c14" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
+    x += ' <td class="c14" onclick="verse_tbl(' + maxverse + ')">1 - ' + maxverse + '</td>';
+    x += ' <td class="c14" onclick="option_display()">Settings</td>';
+    x += ' <td class="c14" onclick="Introductionfn()">Home</td>';
+    x += ' <td class="c14" onclick="story_resume(1)">' + story_names(1) +'</td>';
+    x += ' <td class="c14" onclick="disp_bible_help()">Help</td>';
     x += '</tr></table>';
     document.getElementById("hdr_tbl").innerHTML = x;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
@@ -52,87 +54,151 @@ function build_tlr(book_no, chap_no, maxchap, maxverse) {
 	var nextchap = chap_no + 1;
 	var prevchap = chap_no - 1;
 	var y = '<table><tr>';
-    y += ' <td class="c16" onclick="readMode()">Read</td>';
-    y += ' <td class="c16" onclick="compareMode()">Compare</td>';
-    y += ' <td class="c16" onclick="selectMode()">Selected</td>';
-    y += ' <td class="c16" onclick="allShow()">All</td>';
+    switch (read_mode) {
+    case 1:
+        y += ' <td class="v14" onclick="Option(' + '1' + ')"><b>Option 1</b></td>';
+        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
+        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        if (var_opt1_nte.checked) {
+            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+        } else {
+            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+        };
+        break;
+    case 2:
+        y += ' <td class="c14" onclick="Option(' + '1' + ')">Option 1</td>';
+        y += ' <td class="v14" onclick="Option(' + '2' + ')"><b>Option 2</b></td>';
+        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        if (var_opt2_nte.checked) {
+            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+        } else {
+            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+        };
+        break;
+    case 3:
+        y += ' <td class="c14" onclick="Option(' + '1' + ')">Option 1</td>';
+        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
+        y += ' <td class="v14" onclick="Option(' + '3' + ')"><b>Option 3</b></td>';
+        if (var_opt3_nte.checked) {
+            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+        } else {
+            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+        };
+        break;
+    default:
+        read_mode = 1;
+        y += ' <td class="v14" onclick="Option(' + '1' + ')"><b>Option 1</b></td>';
+        y += ' <td class="c14" onclick="Option(' + '2' + ')">Option 2</td>';
+        y += ' <td class="c14" onclick="Option(' + '3' + ')">Option 3</td>';
+        if (var_opt1_nte.checked) {
+            y += ' <td class="c14" onclick="notesfn()">Notes on</td>';
+        } else {
+            y += ' <td class="c14" onclick="notesfn()">Notes off</td>';
+        };
+        break;
+    };
+    y += ' <td class="c14" onclick="story_resume(2)">' + story_names(2) +'</td>';
     if (chap_no == 1) {
-		y += ' <td class="c16"></td>';
+		y += ' <td class="v14"></td>';
 	}
 	else {
-        y += ' <td class="c16" onclick="chapter_open(' + book_no + ',' + prevchap + ')">Prev</td>';
+        y += ' <td class="c14" onclick="chapter_open(' + book_no + ',' + prevchap + ')">Prev</td>';
     };
     if  (chap_no == maxchap) {
-        y += ' <td class="c16">End</td>';
+        y += ' <td class="v14"></td>';
     }
     else {
-        y += ' <td class="c16" onclick="chapter_open(' + book_no + ',' + nextchap + ')">Next</td>';
+        y += ' <td class="c14" onclick="chapter_open(' + book_no + ',' + nextchap + ')">Next</td>';
     };
     y += '</tr></table>';
     document.getElementById("btm_tbl").innerHTML = y;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_bottom_table",y);};
 };
 
-function fetch_All(x_b_no, x_c_no, maxverse) {
-    var i;
-    var Verse_pfx = "<h5><u>Verse "; 
-    var Verse_sfx = "</u></h5>";
-    var kjm_kjv = [];
-    var bsb_pfx = '<font style="color:Black">[BSB] '
-    var web_pfx = '<font style="color:DarkGreen">[WEB] '
-    var kjv_pfx = '<font style="color:LightCoral">[KJV] '
-    var ylt_pfx = '<font style="color:SaddleBrown">[YLT] '
-    var lxx_pfx = '<font style="color:olive">[LXX] '
-    var notes_pfx = '<font style="color:red">Notes: '
-    var xref_pfx = '<font style="color:purple">Xref: '
-    var sfx = '</font><br>'
-    
+function fetch_chapter(x_b_no, x_c_no, maxverse) {
     var kjvyes = 0; 
     var webyes = 0; 
     var bsbyes = 0; 
     var yltyes = 0; 
     var lxxyes = 0; 
     var nteyes = 0;
+    var mycount = 0;
+    var tempstr = ""
     switch (read_mode) {
-    case "r":
-        bsbyes = 1;
-        nteyes = 0;
-        Verse_pfx = " "
-        Verse_sfx = " "
-        bsb_pfx = ""
+    case 1:
+        if (var_opt1_bsb.checked) {bsbyes = 1; mycount +=1};
+        if (var_opt1_web.checked) {webyes = 1; mycount +=1};
+        if (var_opt1_kjv.checked) {kjvyes = 1; mycount +=1};
+        if (var_opt1_ylt.checked) {yltyes = 1; mycount +=1};
+        if (var_opt1_lxx.checked) {lxxyes = 1; mycount +=1};
+        if (var_opt1_nte.checked) {nteyes = 1};
+        if (mycount < 1){bsbyes = 1; mycount =1; set_option();}
         break;
-    case "c":
-        bsbyes = 1;
-        if (var_par_kjv.checked) {kjvyes = 1};
-        if (var_par_web.checked) {webyes = 1};
-        if (var_par_ylt.checked) {yltyes = 1};
-        if (var_opt_nte.checked) {nteyes = 1};
+    case 2:
+        if (var_opt2_bsb.checked) {bsbyes = 1; mycount +=1};
+        if (var_opt2_web.checked) {webyes = 1; mycount +=1};
+        if (var_opt2_kjv.checked) {kjvyes = 1; mycount +=1};
+        if (var_opt2_ylt.checked) {yltyes = 1; mycount +=1};
+        if (var_opt2_lxx.checked) {lxxyes = 1; mycount +=1};
+        if (var_opt2_nte.checked) {nteyes = 1};
+        if (mycount < 1){bsbyes = 1;yltyes = 1; mycount = 2; set_option();}
         break;
-    case "s":
-        if (var_opt_web.checked) {webyes = 1};
-        if (var_opt_kjv.checked) {kjvyes = 1};
-        if (var_opt_bsb.checked) {bsbyes = 1};
-        if (var_opt_ylt.checked) {yltyes = 1};
-        if (var_opt_lxx.checked) {lxxyes = 1};
-        if (var_opt_nte.checked) {nteyes = 1};
-        break;
-    case "a":
-        webyes = 1;
-        kjvyes = 1;
-        bsbyes = 1;
-        yltyes = 1;
-        lxxyes = 1;
-        nteyes = 1;
+    case 3:
+        if (var_opt3_bsb.checked) {bsbyes = 1; mycount +=1};
+        if (var_opt3_web.checked) {webyes = 1; mycount +=1};
+        if (var_opt3_kjv.checked) {kjvyes = 1; mycount +=1};
+        if (var_opt3_ylt.checked) {yltyes = 1; mycount +=1};
+        if (var_opt3_lxx.checked) {lxxyes = 1; mycount +=1};
+        if (var_opt3_nte.checked) {nteyes = 1};
+        if (mycount < 1){bsbyes = 1; webyes = 1; kjvyes = 1; yltyes = 1; lxxyes = 1; nteyes = 1; mycount = 5; set_option();}
         break;
     default:
         bsbyes = 1;
+        mycount = 1;
+        set_option();
     };
-    var x = '<p><h4>' + fetch_name(x_b_no) + " " + x_c_no + '</h4>';
+    //alert("my count " + mycount + " bsb-" + bsbyes + " web-" + webyes + " kjv-" + kjvyes + " ylt-" + yltyes + " lxx-" + lxxyes)
+    if (mycount == 1) {
+        if (bsbyes == 1) {tempstr = "Version: BSB "}
+        if (webyes == 1) {tempstr = "Version: WEB "}
+        if (kjvyes == 1) {tempstr = "Version: KJV "}
+        if (yltyes == 1) {tempstr = "Version: YLT "}
+        if (lxxyes == 1) {tempstr = "Version: LXX "}
+        var Verse_pfx = "<u><b> "; 
+        var Verse_sfx = "</b></u>";
+        var bsb_pfx = '<font style="color:Black"> '
+        var web_pfx = '<font style="color:DarkGreen"> '
+        var kjv_pfx = '<font style="color:LightCoral"> '
+        var ylt_pfx = '<font style="color:SaddleBrown"> '
+        var lxx_pfx = '<font style="color:olive"> '
+        var notes_pfx = '<font style="color:red">Notes: '
+        var xref_pfx = '<font style="color:purple">Xref: '
+        var sfx = '</font><br>'
+    } else {
+        var Verse_pfx = "<h5><u>Verse "; 
+        var Verse_sfx = "</u></h5>";
+        var bsb_pfx = '<font style="color:Black">[BSB] '
+        var web_pfx = '<font style="color:DarkGreen">[WEB] '
+        var kjv_pfx = '<font style="color:LightCoral">[KJV] '
+        var ylt_pfx = '<font style="color:SaddleBrown">[YLT] '
+        var lxx_pfx = '<font style="color:olive">[LXX] '
+        var notes_pfx = '<font style="color:red">Notes: '
+        var xref_pfx = '<font style="color:purple">Xref: '
+        var sfx = '</font><br>'
+    };
+    var x = '<p><h4>' + tempstr + fetch_name(x_b_no) + " " + x_c_no + '</h4>'
+    if (chap_titles(x_b_no, x_c_no).length > 0) {
+        x += chap_titles(x_b_no, x_c_no) + '<br><br>';
+    };
+
+    var i;
+    var kjm_kjv = [];
+
     for (i=1; i<= maxverse; i++) {
         clickstr = ' onclick="displaytext2('
         clickstr += x_b_no + ',' + x_c_no + ',' + i + ',' + maxverse + ')"'
         clickid  = '<a id="V' + i + '"></a>'
-        x += clickid + '<span font style="color:blue"' + clickstr + '>' + Verse_pfx + i + Verse_sfx + '</span>'
+        x += clickid + '<span style="color:blue;cursor: pointer;"' + clickstr + '>' + Verse_pfx + i + Verse_sfx + '</span>'
         if  (bsbyes == 1) {
             x += bsb_pfx + bsb_fetch(x_b_no, x_c_no, i) + sfx;
         };
@@ -167,7 +233,7 @@ function fetch_All(x_b_no, x_c_no, maxverse) {
                     notex_cno = parseInt(notex_element.substring(2,5),10)
                     notex_vno = parseInt(notex_element.substring(5),10)
                     notes_verse_max = verse_max(notes_book, notex_cno)
-                    x += '<span  onclick="displaytext2(' 
+                    x += '<span style="color: blue; cursor: pointer;" onclick="displaytext2(' 
                     x += notes_book + ',' + notex_cno + ',' + notex_vno + ',' + notes_verse_max + ')">'
                     x += book_short(notes_book) + notex_element.substring(2) + '</span> '
                 };

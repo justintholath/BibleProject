@@ -1,17 +1,13 @@
 function story_resume(lvl) {
-    var in_lvl = lvl
     var story_loc = ["01","01","01","01"];
     var story_sec = 1
     var story_chap = 1
-    if  (var_story != null && var_story.length == 12) {
-        if (in_lvl == 0) {
-            in_lvl = parseInt(var_story.substring(0,1),10);
-        };
-        story_loc = var_story.substring(1).split(":");
+    if  (var_story != null && var_story.length == 11) {
+        story_loc = var_story.split(":");
     };
-
-    switch (in_lvl) {
+    switch (lvl) {
     case 1:
+        //alert("In case 1. lvl:" + lvl + " section:" + story_loc[0] + " chapter:" + story_loc[1])
         story_sec = parseInt(story_loc[0],10)
         story_chap = parseInt(story_loc[1],10)
         break;
@@ -20,9 +16,10 @@ function story_resume(lvl) {
         story_chap = parseInt(story_loc[3],10)
         break;
     default:
-        in_lvl = 1;
+        lvl = 1;
     };
-    story_open(in_lvl, story_sec, story_chap);
+    //alert("In resume. lvl:" + lvl + " section:" + story_sec + " chapter:" + story_chap)
+    story_open(lvl, story_sec, story_chap);
 };
 
 
@@ -36,8 +33,9 @@ function story_open(lvl, sect_no, chap_no) {
     story_text(lvl, sect_no, chap_no);
 
     var story_loc = ["01","01","01","01"];
-    if  (var_story != null && var_story.length == 12) {
-        story_loc = var_story.substring(1).split(":");
+    if  (var_story != null && var_story.length == 11) {
+        story_loc = var_story.split(":");
+        //alert("splitting in story open. lvl:" + lvl + " section:" + sect_no + " chapter:" + chap_no)
     };
 
     switch (lvl) {
@@ -51,7 +49,7 @@ function story_open(lvl, sect_no, chap_no) {
         break;
     };
 
-    var_story = lvl.toString() + story_loc[0] + ":" + story_loc[1] + ":" + story_loc[2] + ":" + story_loc[3];
+    var_story = story_loc[0] + ":" + story_loc[1] + ":" + story_loc[2] + ":" + story_loc[3];
 	if(lsTest()) {localStorage.setItem("jbsb_v11_story_coordinates",var_story);};
 };
 
@@ -87,7 +85,11 @@ function story_tlr(lvl, sect_no, chap_no) {
 
 	var y = '<table><tr>';
     y += ' <td class="c20" onclick="chapter_resume()">Go to Bible</td>';
-    y += ' <td class="c20" onclick="story_skipped(' + lvl + ',' + sect_no + ',' + chap_no + ')">Skipped</td>';
+    if (lvl == 1) {
+        y += ' <td class="c20" onclick="story_skipped(' + lvl + ',' + sect_no + ',' + chap_no + ')">Skipped</td>';
+    } else {
+        y += ' <td class="v20"></td>';
+    };
     if  (lvl == 1) {
         y += ' <td class="c20" onclick="story_resume(2)">' + story_names(2) + '</td>';
     }
@@ -95,13 +97,13 @@ function story_tlr(lvl, sect_no, chap_no) {
         y += ' <td class="c20" onclick="story_resume(1)">' + story_names(1) + '</td>';
     };
     if (sect_no == 1 && chap_no == 1) {
-		y += ' <td class="c20"></td>';
+		y += ' <td class="v20"></td>';
 	}
 	else {
         y += ' <td class="c20" onclick="story_open(' + lvl + ',' + prevsect + ',' + prevchap + ')">Prev</td>';
     };
     if  (nextchap == 999) {
-        y += ' <td class="c20">End</td>';
+        y += ' <td class="v20"></td>';
     }
     else {
         y += ' <td class="c20" onclick="story_open(' + lvl + ',' + nextsect + ',' + nextchap + ')">Next</td>';
@@ -128,7 +130,7 @@ function story_text(lvl, sect_no, chap_no) {
         for (i=1; i< m; i++) {
             currchap = verselist[i].substring(0,5)
             if (currchap !== prevchap) {
-                x += '<font style="color:blue">['
+                x += '<font style="color:blue; cursor: pointer;">['
                 x += chapter_xpnd(currchap) + "] </font><br><br>";
                 prevchap = currchap;
             };
@@ -136,7 +138,7 @@ function story_text(lvl, sect_no, chap_no) {
                 jbk = parseInt(verselist[i].substring(0,2))
                 jcp = parseInt(verselist[i].substring(2,5))
                 jve = parseInt(verselist[i].substring(5,8))
-                x += '<font style="color:blue">['
+                x += '<font style="color:blue; cursor: pointer;">['
                 x += verse_number_click(jbk, jcp, jve) + "] </font>"
                 x += web_fetch(jbk,jcp,jve);
                 x += '<br><br>';
@@ -148,7 +150,7 @@ function story_text(lvl, sect_no, chap_no) {
                 jve = parseInt(verselist[i].substring(5,8))
                 kve = parseInt(verselist[i].substring(8))
                 for (vi = jve; vi <= kve; vi++) {
-                    x += '<font style="color:blue">['
+                    x += '<font style="color:blue; cursor: pointer;">['
                     x += verse_number_click(jbk, jcp, vi) + "] </font>"
                     x += web_fetch(jbk,jcp,vi) + ' ';
                 };
@@ -269,12 +271,12 @@ function story_skipped(lvl, sect_no, chap_no) {
             c_from = parseInt(books_1[b_i][1].substring(0,3),10)
             c_to = parseInt(books_1[b_i][2].substring(0,3),10)
             for (c_i = c_from + 1; c_i < c_to; c_i++) {
-                x += '<br><br><font style="color:red">['
+                x += '<br><br><font style="color:red; cursor: pointer;">['
                 x += chapter_xpnd((100 + b_i).toString().substring(1) + (1000 + c_i).toString().substring(1)) 
                 x += "] </font><br><br>";
                 v_skipped = 1;
             };
-            x += '<br><br><font style="color:blue">['
+            x += '<br><br><font style="color:blue; cursor: pointer;">['
             x += chapter_xpnd((100 + b_i).toString().substring(1) + (1000 + c_to).toString().substring(1)) 
             x += "] </font><br><br>";
             if (c_from == c_to) {
@@ -310,12 +312,12 @@ function story_skipped(lvl, sect_no, chap_no) {
                 };
                 if (c_from !== c_to) {
                     for (cc_i = c_from + 1; cc_i < c_to; cc_i++) {
-                        x += '<br><br><font style="color:red">['
+                        x += '<br><br><font style="color:red; cursor: pointer;">['
                         x += chapter_xpnd((100 + b_i).toString().substring(1) + (1000 + cc_i).toString().substring(1)) 
                         x += "] </font><br><br>";
                         v_skipped = 1;
                     };
-                    x += '<br><br><font style="color:blue">['
+                    x += '<br><br><font style="color:blue; cursor: pointer;">['
                     x += chapter_xpnd((100 + b_i).toString().substring(1) + (1000 + c_to).toString().substring(1)) 
                     x += "] </font><br><br>";
                     v_to = parseInt(books_1[b_i][5][bv_i + 1].substring(3),10)
@@ -360,7 +362,7 @@ function story_skipped(lvl, sect_no, chap_no) {
 function story_books(lvl, curr_sect, sect_no, chap_no) {
     var m = section_max(lvl)
     var i = 0;
-    var x = '<br><br><table><tr><td class="a50" onclick="hide_disp_tbl()"><b>Sections</b></td><td class="w50"></td></tr>';
+    var x = '<br><br><table><tr><td class="a50"><b>Sections</b></td><td class="g50" onclick="hide_disp_tbl()">Close Table</td></tr>';
     for (i=1; i< sect_no; i++) {
         x += '<tr>';
         x += ' <td class="c50" id="s' + i 
@@ -370,11 +372,8 @@ function story_books(lvl, curr_sect, sect_no, chap_no) {
         x += '</tr>';
     };
 	x += '<tr>';
-    x += ' <td class="g50" id="s' + sect_no 
-    x += '" onclick="story_books(' + lvl + ',' + curr_sect + ',' + sect_no + ',' + chap_no + ')">' 
-    x += section_header(lvl, sect_no) + '</td>';
-	x += ' <td class="a50" onclick="section_books(' + lvl + ',' + curr_sect + ',' + sect_no + ',' + chap_no + ')">'
-    x += '<b>' + section_header(lvl, sect_no) + ' - Chapters</b></td>';
+    x += ' <td class="v50"><b>' + section_header(lvl, sect_no) + '</b></td>';
+	x += ' <td class="v50"><b> Chapters</b></td>';
 	x += '</tr>';
     var chapmax = section_chapter_max(lvl, sect_no);
     var j = 1;
@@ -410,34 +409,6 @@ function story_books(lvl, curr_sect, sect_no, chap_no) {
         x += j.toString() + ' - ' + section_chapter(lvl, sect_no, j) + '</td>';
         x += '</tr>';
 		j++;
-    };
-    x += '</table>'
-    document.getElementById("disp_tbl").innerHTML = x;
-    document.getElementById("disp_tbl").style.display = 'block';
-};
-
-
-function section_books(lvl, curr_sect, sect_no, chap_no) {
-	var m = section_max(lvl)
-    var x = '<br><br><table><tr><td class="a50" onclick="hide_disp_tbl()"><b>Sections</b></td><td class="w50"></td>';
-    for (i=1; i< sect_no; i++) {
-        x += '<tr>';
-        x += ' <td class="c50" onclick="story_books(' + lvl + ',' + curr_sect + ',' + i + ',' + chap_no + ')">' 
-        x += section_header(lvl, i) + '</td>';
-        x += ' <td class="w50"></td>';
-        x += '</tr>';
-    };
-	x += '<tr>';
-    x += ' <td class="g50" onclick="story_books(' + lvl + ',' + curr_sect + ',' + sect_no + ',' + chap_no + ')">' 
-    x += section_header(lvl, sect_no) + '</td>';
-	x += ' <td class="w50"></td>';
-	x += '</tr>';
-    for (i=sect_no + 1; i<= m; i++) {
-        x += '<tr>';
-        x += ' <td class="c50" onclick="story_books(' + lvl + ',' + curr_sect + ',' + i + ',' + chap_no + ')">' 
-        x += section_header(lvl, i) + '</td>';
-		x += ' <td class="w50"></td>';
-		x += '</tr>';
     };
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
