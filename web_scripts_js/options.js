@@ -99,9 +99,9 @@ function set_option() {
     newoption += newoption3 + foption_var_opt3_nte + "123x";
     var_read_version = document.querySelector('input[name="read_opt"]:checked').value;
     foption = newoption + var_read_version + read_mode
-    alert("version:" + var_read_version)
-    alert(read_mode)
-    alert("foption:" + foption)
+    //alert("version:" + var_read_version)
+    //alert(read_mode)
+    //alert("foption:" + foption)
 
     if(lsTest()) {localStorage.setItem("jbsb_v11_foption",foption);};
     document.getElementById("select_option").style.display = 'none';

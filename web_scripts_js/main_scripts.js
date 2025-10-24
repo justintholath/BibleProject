@@ -106,7 +106,7 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
     var nteyes = 0;
     var mycount = 0;
     var tempstr = ""
-    alert(var_read_version)
+    //alert(var_read_version)
     switch (read_mode) {
     case 0:
         mycount = 1
