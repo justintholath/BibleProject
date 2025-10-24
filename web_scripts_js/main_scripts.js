@@ -3,19 +3,19 @@ function chapter_resume() {
 	if  (tempString != null && tempString.length == 6) {
 	    var x_b_no = parseInt(tempString.substring(0,2))
 		var x_c_no = parseInt(tempString.substring(3,6));
-		chapter_open(x_b_no, x_c_no);
+		chapter_open(x_b_no, x_c_no, 0);
     }
     else {
-       chapter_open(1, 1);
+       chapter_open(1, 1, 0);
     };
 };
 
 
 function book_open(x_b_no){
-    chapter_open(x_b_no, 0)
+    chapter_open(x_b_no, 0, 1)
 }
 
-function chapter_open(x_b_no, x_c_no) {
+function chapter_open(x_b_no, x_c_no, v_mode) {
     var maxchap = chapter_max(x_b_no);
     var disp_tbl_flag = 0
     if (x_c_no == 0 && maxchap > 1) {
@@ -23,11 +23,10 @@ function chapter_open(x_b_no, x_c_no) {
     };
     if  (x_c_no > maxchap) {x_c_no = maxchap};
     if  (x_c_no == 0) {x_c_no = 1}
-    var maxverse = verse_max(x_b_no, x_c_no);
-    build_hdr(x_b_no, x_c_no, maxchap, maxverse);
-    fetch_chapter(x_b_no, x_c_no, maxverse);
+    build_hdr(x_b_no, x_c_no, maxchap);
+    fetch_chapter(x_b_no, x_c_no, v_mode);
     // fetch_chapter sets the flags which are used in the trailer. So, the order here is important
-    build_tlr(x_b_no, x_c_no, maxchap, maxverse);
+    build_tlr(x_b_no, x_c_no, maxchap);
     if (disp_tbl_flag == 1) {
         chapter_tbl(x_b_no,maxchap)
     };
@@ -35,7 +34,7 @@ function chapter_open(x_b_no, x_c_no) {
 	if(lsTest()) {localStorage.setItem("jbsb_v11_coordinates",var_coordinates);};
 }
 
-function build_hdr(book_no, chap_no, maxchap, maxverse) {
+function build_hdr(book_no, chap_no, maxchap) {
 	var book_name = fetch_name(book_no);
     var x = '<table><tr>';
     x += ' <td class="c20" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
@@ -48,67 +47,57 @@ function build_hdr(book_no, chap_no, maxchap, maxverse) {
 	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
 };
 
-function build_tlr(book_no, chap_no, maxchap, maxverse) {
+function build_tlr(book_no, chap_no, maxchap) {
 	var nextchap = chap_no + 1;
 	var prevchap = chap_no - 1;
 	var y = '<table><tr>';
     switch (read_mode) {
+    case 0:
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
+        break;
     case 1:
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
-        if (var_opt1_nte.checked) {
-            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
-        } else {
-            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
-        };
+        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
         break;
     case 2:
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode 1</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
-        if (var_opt2_nte.checked) {
-            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
-        } else {
-            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
-        };
+        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
         break;
     case 3:
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode 1</td>';
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
-        if (var_opt3_nte.checked) {
-            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
-        } else {
-            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
-        };
+        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
         break;
     default:
-        read_mode = 1;
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode 2</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode 3</td>';
-        if (var_opt1_nte.checked) {
-            y += ' <td class="g20" onclick="notesfn()">Notes</td>';
-        } else {
-            y += ' <td class="c20" onclick="notesfn()">Notes</td>';
-        };
+        read_mode = 0;
+        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
+        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
+        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
         break;
     };
     if (chap_no == 1) {
 		y += ' <td class="v20"></td>';
 	}
 	else {
-        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + prevchap + ')">Prev</td>';
+        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + prevchap + ',0)">Prev</td>';
     };
     if  (chap_no == maxchap) {
         y += ' <td class="v20"></td>';
     }
     else {
-        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + nextchap + ')">Next</td>';
+        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + nextchap + ',0)">Next</td>';
     };
     y += '</tr></table>';
     document.getElementById("btm_tbl").innerHTML = y;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_bottom_table",y);};
 };
 
-function fetch_chapter(x_b_no, x_c_no, maxverse) {
+function fetch_chapter(x_b_no, x_c_no, v_mode) {
+    var maxverse = verse_max(x_b_no, x_c_no);
     var kjvyes = 0; 
     var webyes = 0; 
     var bsbyes = 0; 
@@ -117,7 +106,28 @@ function fetch_chapter(x_b_no, x_c_no, maxverse) {
     var nteyes = 0;
     var mycount = 0;
     var tempstr = ""
+    alert(var_read_version)
     switch (read_mode) {
+    case 0:
+        mycount = 1
+        switch (var_read_version) {
+        case 'b':
+            bsbyes = 1;
+            break;
+        case 'w':
+            webyes = 1;
+            break;
+        case 'k':
+            kjvyes = 1;
+            break;
+        case 'y':
+            yltyes = 1;
+            break;
+        default:
+            bsbyes = 1;
+            break;
+        };
+        break;
     case 1:
         if (var_opt1_bsb.checked) {bsbyes = 1; mycount +=1};
         if (var_opt1_web.checked) {webyes = 1; mycount +=1};
@@ -241,6 +251,7 @@ function fetch_chapter(x_b_no, x_c_no, maxverse) {
     hide_results()
     window.location.href = ("#Top");
 	if(lsTest()) {localStorage.setItem("jbsb_v11_body_text",x);};
+    if (v_mode == 1 && mycount * maxverse > 30) {verse_tbl(maxverse)};
 };
 
 function displaytext2(bno, cno, vno, maxverse) {
@@ -251,10 +262,8 @@ function displaytext2(bno, cno, vno, maxverse) {
     var bsb_pfx = '<font style="color:LightCoral">[BSB] '
     var ylt_pfx = '<font style="color:SaddleBrown">[YLT] '
     var lxx_pfx = '<font style="color:olive">[LXX] '
-    var rvwCtitle = book_short(bno) + (1000 + cno).toString().substring(1)
-    var rvwVtitle = rvwCtitle + (1000 + vno).toString().substring(1)
-    rvwVtitle += " " + (1000 + cno).toString().substring(1)
-    rvwVtitle += (1000 + vno).toString().substring(1)
+    var rvwCtitle = fetch_name(bno) + " " + (1000 + cno).toString().substring(1)
+    var rvwVtitle = rvwCtitle + ":" + (1000 + vno).toString().substring(1)
     var x = '<p>' + rvwVtitle + '<br><br>';
     x += web_pfx + web_fetch(bno, cno, vno) + '</font><br>';
     x += kjv_pfx + kjv_fetch(bno, cno, vno) + '</font><br>';
@@ -267,13 +276,13 @@ function displaytext2(bno, cno, vno, maxverse) {
 	x += '<table><tr>';
     x += ' <td class="c25" onclick="ClosePop()">Close</td>';
     if (vno == 1) {
-		x += ' <td class="c25"></td>';
+		x += ' <td class="v25"></td>';
 	}
 	else {
         x += ' <td class="c25" onclick="displaytext2(' + bno + ',' + cno + ',' + prevno + ',' + maxverse + ')">Prev</td>';
     };
     if  (vno == maxverse) {
-        x += ' <td class="c25">End</td>';
+        x += ' <td class="v25"></td>';
     }
     else {
         x += ' <td class="c25" onclick="displaytext2(' + bno + ',' + cno + ',' + nextno + ',' + maxverse + ')">Next</td>';
@@ -290,29 +299,32 @@ function ClosePop() {
 };
 
 function chapter_tbl(book_no, maxchap) {
-    var last_col = maxchap % 10;
-    var row_loop = (maxchap - last_col) / 10;
+    var nbr_cols = 10
+    var disp_class_no = "10"
+    if (book_no == 27) {nbr_cols = 7; disp_class_no = "14"}
+    var last_col = maxchap % nbr_cols;
+    var row_loop = (maxchap - last_col) / nbr_cols;
     var x = '<br><br><table>';
-    x += '<th style="color:blue;"  colspan="10"><b>' + fetch_name(book_no) + ' - Chapters</b></th>'
+    x += '<th style="color:blue;"  colspan="' + nbr_cols + '"><b>' + fetch_name(book_no) + ' - Chapters</b></th>'
     var i, j, k;
     for (i=0; i< row_loop; i++) {
         x += '<tr>';
-        for (j=1; j<= 10; j++) {
-            k = i * 10 + j;
-            x += ' <td class="c10" onclick="chapter_open(' + book_no + ',' + k + ')">' + k + '</td>';
+        for (j=1; j<= nbr_cols; j++) {
+            k = i * nbr_cols + j;
+            x += ' <td class="c' + disp_class_no + '" onclick="chapter_open(' + book_no + ',' + k + ',1)">' + k + '</td>';
         }
         x += '</tr>';
     }
     if (last_col > 0) {
         x += '<tr>';
-        for (j=1; j<= 10; j++) {
+        for (j=1; j<= nbr_cols; j++) {
             if (j<= last_col) {
-                k = row_loop * 10 + j;
+                k = row_loop * nbr_cols + j;
                 chapter_key = book_no * 1000 + k;
-                x += ' <td class="c10" onclick="chapter_open(' + book_no + ',' + k + ')">' + k + '</td>';
+                x += ' <td class="c' + disp_class_no + '" onclick="chapter_open(' + book_no + ',' + k + ',1)">' + k + '</td>';
             }
             else {
-                x += ' <td class="w10"></td>';
+                x += ' <td class="w' + disp_class_no + '"></td>';
             };
         }
         x += '</tr>';
@@ -328,23 +340,23 @@ function chapter_tbl(book_no, maxchap) {
 }
 
 function verse_tbl(maxverse) {
-    var last_col = maxverse % 10;
-    var row_loop = (maxverse - last_col) / 10;
-    var x = '<br><br><table><th style="color:blue;" colspan="10"> Choose verse</th>';
+    var last_col = maxverse % 7;
+    var row_loop = (maxverse - last_col) / 7;
+    var x = '<br><br><table><th style="color:blue;" colspan="14"> Choose verse</th>';
     var i, j, k;
     for (i=0; i< row_loop; i++) {
         x += '<tr>';
-        for (j=1; j<= 10; j++) {
-            k = i * 10 + j;
-            x += ' <td class="o10" onclick="goto_verse(' + k + ')">' + k + '</td>';
+        for (j=1; j<= 7; j++) {
+            k = i * 7 + j;
+            x += ' <td class="o14" onclick="goto_verse(' + k + ')">' + k + '</td>';
         }
         x += '</tr>';
     }
     if (last_col > 0) {
         x += '<tr>';
         for (j=1; j<= last_col; j++) {
-            k = row_loop * 10 + j;
-            x += ' <td class="o10" onclick="goto_verse(' + k + ')">' + k + '</td>';
+            k = row_loop * 7 + j;
+            x += ' <td class="o14" onclick="goto_verse(' + k + ')">' + k + '</td>';
         }
         x += '</tr>';
     }

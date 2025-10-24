@@ -5,9 +5,10 @@ function Introductionfn() {
 	//localStorage.removeItem("jbsb_v11_coordinates");
 	//localStorage.removeItem("jbsb_v11_foption");
     var x = '<table><tr>';
-    x += '<td class="c33" onclick="chapter_resume()">Go to Bible</td>'
-    x += '<td class="c33" onclick="story_resume(1)">Go to ' + story_names(1) + '</td>'
-    x += '<td class="c33" onclick="story_resume(2)">Go to ' + story_names(2) + '</td>'
+    x += '<td class="c25" onclick="chapter_resume()">1. Bible</td>'
+    x += '<td class="c25" onclick="story_resume(1)">2. ' + story_names(1) + '</td>'
+    x += '<td class="c25" onclick="story_resume(2)">3. ' + story_names(2) + '</td>'
+    x += '<td class="c25" onclick="option_display()">Settings</td>'
     x += '</tr></table>'
     document.getElementById("hdr_tbl").innerHTML = x;
     document.getElementById("btm_tbl").innerHTML = "";

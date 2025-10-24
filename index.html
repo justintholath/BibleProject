@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-  <title>BSB V1.1 - Study Version</title>
+  <title>The Bible Project</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -20,10 +20,15 @@ td.c25 {text-align: center; width:25%; background-color:#d9edf7; cursor: pointer
 td.c50 {text-align: center; width:50%; background-color:#d9edf7; cursor: pointer}
 td.c100 {text-align: center; width:100%; background-color:#d9edf7; cursor: pointer}
 
+td.t20 {text-align: center; width:20%; background-color:#87f5c5; cursor: pointer}
+td.t50 {text-align: center; width:50%; background-color:#87f5c5; cursor: pointer}
+td.t100 {text-align: center; width:100%; background-color:#87f5c5; cursor: pointer}
+
 td.g20 {text-align: center; width:20%; background-color:#FFC300; cursor: pointer}
 td.g50 {text-align: center; width:50%; background-color:#FFC300; cursor: pointer}
 
 td.o10 {text-align: center; width:10%; background-color:#FFE997; cursor: pointer}
+td.o14 {text-align: center; width:14%; background-color:#FFE997; cursor: pointer}
 td.o50 {text-align: center; width:50%; background-color:#FFE997; cursor: pointer}
 
 td.a50 {text-align: center; width:50%; background-color:#908A74}
@@ -37,6 +42,7 @@ td.o100 {text-align: center; width:100%; background-color:#FFE997}
 td.v10 {text-align: center; width:10%; background-color:#EAECEE}
 td.v14 {text-align: center; width:14%; background-color:#EAECEE}
 td.v20 {text-align: center; width:20%; background-color:#EAECEE}
+td.v25 {text-align: center; width:25%; background-color:#EAECEE}
 td.v50 {text-align: center; width:50%; background-color:#EAECEE}
 td.l14 {text-align: left; width:14%; background-color:#d9edf7}
 td.l20 {text-align: left; width:20%; background-color:#d9edf7}
@@ -118,25 +124,46 @@ h5 span {background:#fff; padding:0 2px;}
   <table>
 <tr>
   <td style="color:blue; background-color:#FFFFFF"">
+    <b>Read</b>
+  </td>
+  <td class="l14">
+    <label for="option1">BSB</label><input type="radio" id="read_bsb" name="read_opt" value="b">
+  </td>
+  <td class="l14">
+    <label for="option2">WEB</label><input type="radio" id="read_web" name="read_opt" value="w">
+  </td>
+  <td class="l14">
+    <label for="option3">KJV</label><input type="radio" id="read_kjv" name="read_opt" value="k">
+  </td>
+  <td class="l14">
+    <label for="option4">YLT</label><input type="radio" id="read_ylt" name="read_opt" value="y">
+  </td>
+  <td class="l14">
+  </td>
+  <td class="l14">
+  </td>
+</tr>
+<tr>
+  <td style="color:blue; background-color:#FFFFFF"">
     <b>Mode 1</b>
   </td>
   <td class="l14">
-    <input id="opt1_bsb" type="checkbox" class="jchk"> BSB
+     BSB <input id="opt1_bsb" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt1_web" type="checkbox" class="jchk"> WEB
+     WEB <input id="opt1_web" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt1_kjv" type="checkbox" class="jchk"> KJV
+     KJV <input id="opt1_kjv" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt1_ylt" type="checkbox" class="jchk"> YLT
+     YLT <input id="opt1_ylt" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt1_lxx" type="checkbox" class="jchk"> LXX
+     LXX <input id="opt1_lxx" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt1_nte" type="checkbox" class="jchk"> Notes
+     Notes <input id="opt1_nte" type="checkbox" class="jchk">
   </td>
 </tr>
 <tr>
@@ -144,22 +171,22 @@ h5 span {background:#fff; padding:0 2px;}
     <b>Mode 2</b>
   </td>
   <td class="l14">
-    <input id="opt2_bsb" type="checkbox" class="jchk"> BSB
+     BSB <input id="opt2_bsb" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt2_web" type="checkbox" class="jchk"> WEB
+     WEB <input id="opt2_web" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt2_kjv" type="checkbox" class="jchk"> KJV
+     KJV <input id="opt2_kjv" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt2_ylt" type="checkbox" class="jchk"> YLT
+     YLT <input id="opt2_ylt" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt2_lxx" type="checkbox" class="jchk"> LXX
+     LXX <input id="opt2_lxx" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt2_nte" type="checkbox" class="jchk"> Notes
+     Notes <input id="opt2_nte" type="checkbox" class="jchk">
   </td>
 </tr>
 <tr>
@@ -167,22 +194,22 @@ h5 span {background:#fff; padding:0 2px;}
     <b>Mode 3</b>
   </td>
   <td class="l14">
-    <input id="opt3_bsb" type="checkbox" class="jchk"> BSB
+     BSB <input id="opt3_bsb" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt3_web" type="checkbox" class="jchk"> WEB
+     WEB <input id="opt3_web" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt3_kjv" type="checkbox" class="jchk"> KJV
+     KJV <input id="opt3_kjv" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt3_ylt" type="checkbox" class="jchk"> YLT
+     YLT <input id="opt3_ylt" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt3_lxx" type="checkbox" class="jchk"> LXX
+     LXX <input id="opt3_lxx" type="checkbox" class="jchk">
   </td>
   <td class="l14">
-    <input id="opt3_nte" type="checkbox" class="jchk"> Notes
+     Notes <input id="opt3_nte" type="checkbox" class="jchk">
   </td>
 </tr>
   </table>
@@ -229,6 +256,7 @@ var var_opt3_ylt = document.getElementById("opt3_ylt");
 var var_opt3_lxx = document.getElementById("opt3_lxx");
 var var_opt3_nte = document.getElementById("opt3_nte");
 
+var var_read_version = 'b';
 var var_coordinates = "01-001";
 var var_story = "01:01:01:01";
 var foption = "";
@@ -288,7 +316,7 @@ if(lsTest())
     	var_opt3_bsb.checked = false;
     	var_opt3_ylt.checked = false;
     	var_opt3_lxx.checked = false;
-    	var_opt3_nte.checked = false;
+    	var_opt3_nte.checked = false;    
         
     	if  (foption.substring(0,5).includes("w")) {var_opt1_web.checked = true}
     	if  (foption.substring(0,5).includes("k")) {var_opt1_kjv.checked = true}
@@ -310,8 +338,26 @@ if(lsTest())
     	if  (foption.substring(20,25).includes("y")) {var_opt3_ylt.checked = true}
     	if  (foption.substring(20,25).includes("l")) {var_opt3_lxx.checked = true}
     	if  (foption.substring(25,26) == "n") {var_opt3_nte.checked = true}
-        read_mode = parseInt(foption.substring(26,27),10);
-       // alert(1)
+        var_read_version = foption.substring(30,31);
+        switch (var_read_version) {
+        case 'b':
+            document.getElementById("read_bsb").checked = true;
+            break;
+        case 'w':
+            document.getElementById("read_web").checked = true;
+            break;
+        case 'k':
+            document.getElementById("read_kjv").checked = true;
+            break;
+        case 'y':
+            document.getElementById("read_ylt").checked = true;
+            break;
+        default:
+            document.getElementById("read_bsb").checked = true;
+            break;
+        };
+        read_mode = parseInt(foption.substring(31,32),10);
+        //alert(var_read_version.value)
     }
     else
     {

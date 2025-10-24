@@ -1,26 +1,8 @@
 function Option(in_val) {
     read_mode = in_val;
     chapter_resume();
-    foption = foption.substring(0,26) + read_mode
+    foption = foption.substring(0,27) + read_mode
     if(lsTest()) {localStorage.setItem("jbsb_v11_foption",foption);};
-};
-
-function notesfn() {
-    switch (read_mode) {
-    case 1:
-        if  (var_opt1_nte.checked) {var_opt1_nte.checked = false;} else {var_opt1_nte.checked = true;};
-        break;
-    case 2:
-        if  (var_opt2_nte.checked) {var_opt2_nte.checked = false;} else {var_opt2_nte.checked = true;};
-        break;
-    case 3:
-        if  (var_opt3_nte.checked) {var_opt3_nte.checked = false;} else {var_opt3_nte.checked = true;};
-        break;
-    default:
-        read_mode = 1
-        if  (var_opt1_nte.checked) {var_opt1_nte.checked = false;} else {var_opt1_nte.checked = true;};
-    };
-    change_option();
 };
 
 function change_option() {
@@ -115,9 +97,11 @@ function set_option() {
     newoption =  newoption1 + foption_var_opt1_nte + "123x";
     newoption += newoption2 + foption_var_opt2_nte + "123x";
     newoption += newoption3 + foption_var_opt3_nte + "123x";
-
-    foption = newoption + read_mode
-    //alert("foption:" + foption)
+    var_read_version = document.querySelector('input[name="read_opt"]:checked').value;
+    foption = newoption + var_read_version + read_mode
+    alert("version:" + var_read_version)
+    alert(read_mode)
+    alert("foption:" + foption)
 
     if(lsTest()) {localStorage.setItem("jbsb_v11_foption",foption);};
     document.getElementById("select_option").style.display = 'none';

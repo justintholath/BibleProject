@@ -51,21 +51,23 @@ function story_open(lvl, sect_no, chap_no) {
 
     var_story = story_loc[0] + ":" + story_loc[1] + ":" + story_loc[2] + ":" + story_loc[3];
 	if(lsTest()) {localStorage.setItem("jbsb_v11_story_coordinates",var_story);};
+    window.location.href = ("#Top");
 };
 
 function story_hdr(lvl, sect_no, chap_no) {
-    var x = '<table><tr><td class="c100" ';
+    var x = '<table><tr><td class='
+    if (lvl == 1) {x += '"c100" ';} else {x += '"t100" ';}
     x += 'onclick="story_books(';
     x += lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">';
-    x += '<b><font style="color:Red"> ' + sect_no + ". " + section_header(lvl, sect_no) + ' </font></b>';
-    x += '&emsp; <i>' + chap_no + '. ' + section_chapter(lvl, sect_no, chap_no) + ' </i>';
-    x += "&emsp; (" + story_names(lvl) + ")"
+    x += '<b>' + sect_no + ". " + section_header(lvl, sect_no) + '</b>';
     x += '</td></tr></table>';
     document.getElementById("hdr_tbl").innerHTML = x;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
 };
 
 function story_tlr(lvl, sect_no, chap_no) {
+    var trlr_class = 'class="c20"'
+    if (lvl == 2) {trlr_class = 'class="t20"';};
 	var nextchap = chap_no + 1;
     var nextsect = sect_no;
 	var prevchap = chap_no - 1;
@@ -84,29 +86,20 @@ function story_tlr(lvl, sect_no, chap_no) {
     };
 
 	var y = '<table><tr>';
-    y += ' <td class="c20" onclick="chapter_resume()">Go to Bible</td>';
-    if (lvl == 1) {
-        y += ' <td class="c20" onclick="story_skipped(' + lvl + ',' + sect_no + ',' + chap_no + ')">Skipped</td>';
-    } else {
-        y += ' <td class="v20"></td>';
-    };
-    if  (lvl == 1) {
-        y += ' <td class="c20" onclick="story_resume(2)">' + story_names(2) + '</td>';
-    }
-    else {
-        y += ' <td class="c20" onclick="story_resume(1)">' + story_names(1) + '</td>';
-    };
+    y += ' <td ' + trlr_class + ' onclick="Introductionfn()">Home</td>';
+    y += ' <td ' + trlr_class + ' onclick="chapter_resume()">Bible</td>';
+    y += ' <td ' + trlr_class + ' onclick="story_books(' + lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">List</td>';
     if (sect_no == 1 && chap_no == 1) {
 		y += ' <td class="v20"></td>';
 	}
 	else {
-        y += ' <td class="c20" onclick="story_open(' + lvl + ',' + prevsect + ',' + prevchap + ')">Prev</td>';
+        y += ' <td ' + trlr_class + ' onclick="story_open(' + lvl + ',' + prevsect + ',' + prevchap + ')">Prev</td>';
     };
     if  (nextchap == 999) {
         y += ' <td class="v20"></td>';
     }
     else {
-        y += ' <td class="c20" onclick="story_open(' + lvl + ',' + nextsect + ',' + nextchap + ')">Next</td>';
+        y += ' <td ' + trlr_class + ' onclick="story_open(' + lvl + ',' + nextsect + ',' + nextchap + ')">Next</td>';
     };
     y += '</tr></table>';
     document.getElementById("btm_tbl").innerHTML = y;
@@ -118,7 +111,7 @@ function story_text(lvl, sect_no, chap_no) {
     var vlen = vlist.length
     var verselist = ""
     var m = 0
-    var x = "<br>";
+    var x = "<br><h2>" + chap_no + ". " + section_chapter(lvl, sect_no, chap_no) + "</h2>";
     var prevchap = "";
     var currchap = "";
     for (h=0; h < vlen; h++) {
@@ -158,6 +151,11 @@ function story_text(lvl, sect_no, chap_no) {
                 continue;
             };
         };
+    };
+    if (lvl == 1) {
+        x += '<font style="color:blue; cursor: pointer;">'
+        x += '<span onclick="story_skipped(' + lvl + ',' + sect_no + ',' + chap_no + ')"><u>Skipped Verses</u></span>'
+        x += '</font>';
     };
 	x += "<br><br><br><br><br></p>"
 
@@ -356,16 +354,19 @@ function story_skipped(lvl, sect_no, chap_no) {
     y += ' <td class="c50" onclick="story_open(' + lvl + ',' + sect_no + ',' + chap_no + ')">Back to Story</td>';
     y += '</tr></table>';
     document.getElementById("btm_tbl").innerHTML = y;
+    window.location.href = ("#Top");
 };
 
 
 function story_books(lvl, curr_sect, sect_no, chap_no) {
+    var tble_class = 'class="c50"'
+    if (lvl == 2) {tble_class = 'class="t50"';};
     var m = section_max(lvl)
     var i = 0;
     var x = '<br><br><table><tr><td class="a50"><b>Sections</b></td><td class="g50" onclick="hide_disp_tbl()">Close Table</td></tr>';
     for (i=1; i< sect_no; i++) {
         x += '<tr>';
-        x += ' <td class="c50" id="s' + i 
+        x += ' <td ' + tble_class + ' id="s' + i 
         x += '" onclick="story_books(' + lvl + ',' + curr_sect + ',' + i + ',' + chap_no + ')">' 
         x += section_header(lvl, i) + '</td>';
         x += ' <td class="w50"></td>';
@@ -413,6 +414,7 @@ function story_books(lvl, curr_sect, sect_no, chap_no) {
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
+    window.location.href = ("#Top");
 };
 
 
@@ -421,7 +423,7 @@ function chapter_xpnd(instr) {
     var x_ch = parseInt(instr.substring(2,5))
     var tmpstr = fetch_name(x_bk) + " " +  x_ch;
 
-    var clickstr = '<span onclick="chapter_open(' + x_bk + ',' + x_ch + ')">';
+    var clickstr = '<span onclick="chapter_open(' + x_bk + ',' + x_ch + ',0)">';
     clickstr += '<u>' + tmpstr + '</u></span>'
         
     return clickstr;
