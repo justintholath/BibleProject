@@ -74,9 +74,9 @@ function story_hdr(lvl, sect_no, chap_no) {
     };
 
 	var y = '<table><tr>';
+    y += ' <td ' + trlr_class + ' onclick="story_books(' + lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">List</td>';
     y += ' <td ' + trlr_class + ' onclick="Introductionfn()">Home</td>';
     y += ' <td ' + trlr_class + ' onclick="chapter_resume()">Bible</td>';
-    y += ' <td ' + trlr_class + ' onclick="story_books(' + lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">List</td>';
     if (sect_no == 1 && chap_no == 1) {
 		y += ' <td class="v20"></td>';
 	}
@@ -122,7 +122,7 @@ function story_text(lvl, sect_no, chap_no) {
                 jve = parseInt(verselist[i].substring(5,8))
                 x += '<font style="color:blue; cursor: pointer;">['
                 x += verse_number_click(jbk, jcp, jve) + "] </font>"
-                x += web_fetch(jbk,jcp,jve);
+                x += bsb_fetch(jbk,jcp,jve);
                 x += '<br><br>';
                 continue;
             };
@@ -134,7 +134,7 @@ function story_text(lvl, sect_no, chap_no) {
                 for (vi = jve; vi <= kve; vi++) {
                     x += '<font style="color:blue; cursor: pointer;">['
                     x += verse_number_click(jbk, jcp, vi) + "] </font>"
-                    x += web_fetch(jbk,jcp,vi) + ' ';
+                    x += bsb_fetch(jbk,jcp,vi) + ' ';
                 };
 			    x += '<br><br>';
                 continue;
@@ -274,7 +274,7 @@ function story_skipped(lvl, sect_no, chap_no) {
             for (v_i = v_from; v_i < v_to; v_i++) {
                 x += '<font style="color:red">['
                 x += verse_number_click(b_i, c_to, v_i) + "] </font>"
-                x += web_fetch(b_i, c_to, v_i) + '<br>';
+                x += bsb_fetch(b_i, c_to, v_i) + '<br>';
                 v_skipped = 1;
             };
             books_1[b_i][5].sort();
@@ -286,14 +286,14 @@ function story_skipped(lvl, sect_no, chap_no) {
                 v_to = parseInt(books_1[b_i][5][bv_i + 1].substring(3),10)
                 x += '<font style="color:blue">['
                 x += verse_number_click(b_i, c_from, v_from) + "] </font>"
-                x += web_fetch(b_i, c_from, v_from) + '<br>';
+                x += bsb_fetch(b_i, c_from, v_from) + '<br>';
                 if (c_from !== c_to) {
                     v_to = verse_max(b_i, c_from)
                 };
                 for (vv_i = v_from + 1; vv_i < v_to; vv_i++) {
                     x += '<font style="color:red">['
                     x += verse_number_click(b_i, c_from, vv_i) + "] </font>"
-                    x += web_fetch(b_i, c_from, vv_i) + '<br>';
+                    x += bsb_fetch(b_i, c_from, vv_i) + '<br>';
                     v_skipped = 1;
                 };
                 if (c_from !== c_to) {
@@ -310,7 +310,7 @@ function story_skipped(lvl, sect_no, chap_no) {
                     for (vv_i = 1; vv_i < v_to; vv_i++) {
                         x += '<font style="color:red">['
                         x += verse_number_click(b_i, c_to, vv_i) + "] </font>"
-                        x += web_fetch(b_i, c_to, vv_i) + '<br>';
+                        x += bsb_fetch(b_i, c_to, vv_i) + '<br>';
                         v_skipped = 1;
                     };
                 };
@@ -320,13 +320,13 @@ function story_skipped(lvl, sect_no, chap_no) {
             v_to = parseInt(books_1[b_i][5][bv_i].substring(3),10)
             x += '<font style="color:blue">['
             x += verse_number_click(b_i, c_to, v_to) + "] </font>"
-            x += web_fetch(b_i, c_to, v_to) + '<br>';
+            x += bsb_fetch(b_i, c_to, v_to) + '<br>';
             v_from = v_to + 1
             v_to = verse_max(b_i, c_to)
             for (v_i = v_from; v_i < v_to; v_i++) {
                 x += '<font style="color:red">['
                 x += verse_number_click(b_i, c_to, v_i) + "] </font>"
-                x += web_fetch(b_i, c_to, v_i) + '<br>';
+                x += bsb_fetch(b_i, c_to, v_i) + '<br>';
                 v_skipped = 1;
             };
         };

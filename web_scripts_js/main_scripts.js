@@ -78,13 +78,19 @@ function display_menu(book_no, chap_no, maxchap) {
     x += '</tr></table>';
     x += '<br>'
     x += '<table><tr>'
-    x += '<td class="w14">BSB <input id="opt1_bsb" type="checkbox" class="jchk"></td>'
-    x += '<td class="w14">WEB <input id="opt1_web" type="checkbox" class="jchk"></td>'
-    x += '<td class="w14">KJV <input id="opt1_kjv" type="checkbox" class="jchk"></td>'
-    x += '<td class="w14">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
-    x += '<td class="w14">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
-    x += '<td class="w14">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
-    x += '<td class="c14" onclick="set_option()">Apply</td>';
+    x += '<td class="w16">BSB <input id="opt1_bsb" type="checkbox" class="jchk"></td>'
+    x += '<td class="w16">WEB <input id="opt1_web" type="checkbox" class="jchk"></td>'
+    x += '<td class="w16">KJV <input id="opt1_kjv" type="checkbox" class="jchk"></td>'
+    x += '<td class="w16">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
+    x += '<td class="w16">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
+    x += '<td class="w16">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
+    x += '</tr></table>';
+    x += '<table><tr>'
+    x += '<td class="w20"></td>';
+    x += '<td class="w20"></td>';
+    x += '<td class="w20"></td>';
+    x += '<td class="w20"></td>';
+    x += '<td class="c20" onclick="set_option()">Apply</td>';
     x += '</tr></table>';
 /*    alert(x); */
     txt_modal.innerHTML = x;
@@ -370,7 +376,7 @@ function ClosePop() {
 function chapter_tbl(book_no, maxchap) {
     var nbr_cols = 10
     var disp_class_no = "10"
-    if (book_no == 27) {nbr_cols = 7; disp_class_no = "14"}
+    if (book_no == 27 && (window.innerWidth <= 768)) {nbr_cols = 7; disp_class_no = "14"}
     var last_col = maxchap % nbr_cols;
     var row_loop = (maxchap - last_col) / nbr_cols;
     var x = '<br><br><table>';
@@ -409,23 +415,27 @@ function chapter_tbl(book_no, maxchap) {
 }
 
 function verse_tbl(maxverse) {
-    var last_col = maxverse % 7;
-    var row_loop = (maxverse - last_col) / 7;
-    var x = '<br><br><table><th style="color:blue;" colspan="14"> Choose verse</th>';
+    var nbr_cols = 10
+    var disp_class_no = "10"
+    if (maxverse > 99 && (window.innerWidth <= 768)) {nbr_cols = 7; disp_class_no = "14"}
+
+    var last_col = maxverse % nbr_cols;
+    var row_loop = (maxverse - last_col) / nbr_cols;
+    var x = '<br><br><table><th style="color:blue;" colspan="' + nbr_cols + '"> Choose verse</th>';
     var i, j, k;
     for (i=0; i< row_loop; i++) {
         x += '<tr>';
-        for (j=1; j<= 7; j++) {
-            k = i * 7 + j;
-            x += ' <td class="o14" onclick="goto_verse(' + k + ')">' + k + '</td>';
+        for (j=1; j<= nbr_cols; j++) {
+            k = i * nbr_cols + j;
+            x += ' <td class="o' + disp_class_no + '" onclick="goto_verse(' + k + ')">' + k + '</td>';
         }
         x += '</tr>';
     }
     if (last_col > 0) {
         x += '<tr>';
         for (j=1; j<= last_col; j++) {
-            k = row_loop * 7 + j;
-            x += ' <td class="o14" onclick="goto_verse(' + k + ')">' + k + '</td>';
+            k = row_loop * nbr_cols + j;
+            x += ' <td class="o' + disp_class_no + '" onclick="goto_verse(' + k + ')">' + k + '</td>';
         }
         x += '</tr>';
     }
@@ -453,11 +463,15 @@ function AllBooks(book_no) {
         x += ' <td class="o50">Old</td>'
         x += ' <td class="c50" onclick="AllBooks(40)">New</td>'
         x += '</tr></table><br>'
-        x += booklist_law()
-        x += booklist_history()
-        x += booklist_wisdom()
-        x += booklist_lxxmajor()
-        x += booklist_minor()
+        if (window.innerWidth <= 768) {
+            x += shortlist_ot()
+        } else {
+            x += booklist_law()
+            x += booklist_history()
+            x += booklist_wisdom()
+            x += booklist_lxxmajor()
+            x += booklist_minor()
+        };
     } else {
         x += '<table><tr>'
         x += ' <td class="c50" onclick="AllBooks(1)">Old</td>'
@@ -555,6 +569,68 @@ function booklist_minor() {
     x += '</tr></table><br>'
     return x;
 };
+
+function shortlist_ot() {
+    var x = '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(1)">Gen</td>'
+    x += ' <td class="c20" onclick="book_open(2)">Exo</td>'
+    x += ' <td class="c20" onclick="book_open(3)">Lev</td>'
+    x += ' <td class="c20" onclick="book_open(4)">Num</td>'
+    x += ' <td class="c20" onclick="book_open(5)">Deu</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(6)">Jos</td>'
+    x += ' <td class="c20" onclick="book_open(7)">Jdg</td>'
+    x += ' <td class="c20" onclick="book_open(31)">Rut</td>'
+    x += ' <td class="c20" onclick="book_open(8)">1Sa</td>'
+    x += ' <td class="c20" onclick="book_open(9)">2Sa</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(10)">1Ki</td>'
+    x += ' <td class="c20" onclick="book_open(11)">2Ki</td>'
+    x += ' <td class="c20" onclick="book_open(38)">1Ch</td>'
+    x += ' <td class="c20" onclick="book_open(39)">2Ch</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(36)">Ezr</td>'
+    x += ' <td class="c20" onclick="book_open(37)">Neh</td>'
+    x += ' <td class="c20" onclick="book_open(34)">Est</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(29)">Job</td>'
+    x += ' <td class="c20" onclick="book_open(27)">Psa</td>'
+    x += ' <td class="c20" onclick="book_open(28)">Pro</td>'
+    x += ' <td class="c20" onclick="book_open(33)">Ecc</td>'
+    x += ' <td class="c20" onclick="book_open(30)">Son</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(12)">Isa</td>'
+    x += ' <td class="c20" onclick="book_open(13)">Jer</td>'
+    x += ' <td class="c20" onclick="book_open(14)">Eze</td>'
+    x += ' <td class="c20" onclick="book_open(32)">Lam</td>'
+    x += ' <td class="c20" onclick="book_open(35)">Dan</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(15)">Hos</td>'
+    x += ' <td class="c20" onclick="book_open(16)">Joe</td>'
+    x += ' <td class="c20" onclick="book_open(17)">Amo</td>'
+    x += ' <td class="c20" onclick="book_open(18)">Oba</td>'
+    x += ' <td class="c20" onclick="book_open(19)">Jon</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(20)">Mic</td>'
+    x += ' <td class="c20" onclick="book_open(21)">Nah</td>'
+    x += ' <td class="c20" onclick="book_open(22)">Hab</td>'
+    x += ' <td class="c20" onclick="book_open(23)">Zep</td>'
+    x += ' <td class="c20" onclick="book_open(24)">Hag</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(25)">Zec</td>'
+    x += ' <td class="c20" onclick="book_open(26)">Mal</td>'
+    x += '</tr></table><br>'
+    return x;
+};
+
 
 function booklist_nt() {
     var x = '<table><tr>'
