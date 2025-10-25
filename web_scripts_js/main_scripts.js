@@ -404,9 +404,10 @@ function chapter_tbl(book_no, maxchap) {
         }
         x += '</tr>';
     }
-    x += '<tr>';
-    x += '<td class="w80" colspan="8"></td>';
-    x += '<td class="g20" onclick="hide_disp_tbl()" colspan="2" ><b>Close Table</b></td>'
+    x += '</table>'
+    x += '<table><tr>';
+    x += '<td class="w80"></td>';
+    x += '<td class="g20" onclick="hide_disp_tbl()"><b>Close Table</b></td>'
     x += '</tr>';
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
@@ -439,9 +440,10 @@ function verse_tbl(maxverse) {
         }
         x += '</tr>';
     }
-    x += '<tr>';
-    x += '<td class="w80" colspan="8"></td>';
-    x += '<td class="g20" onclick="hide_disp_tbl()" colspan="2" ><b>Close Table</b></td>'
+    x += '</table>'
+    x += '<table><tr>';
+    x += '<td class="w80"></td>';
+    x += '<td class="g20" onclick="hide_disp_tbl()"><b>Close Table</b></td>'
     x += '</tr>';
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
