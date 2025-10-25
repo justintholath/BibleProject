@@ -29,7 +29,6 @@ function story_open(lvl, sect_no, chap_no) {
     if (chap_no > section_chapter_max(lvl, sect_no)) {alert("invalid chapter")
 	};
     story_hdr(lvl, sect_no, chap_no);
-    story_tlr(lvl, sect_no, chap_no);
     story_text(lvl, sect_no, chap_no);
 
     var story_loc = ["01","01","01","01"];
@@ -55,17 +54,6 @@ function story_open(lvl, sect_no, chap_no) {
 };
 
 function story_hdr(lvl, sect_no, chap_no) {
-    var x = '<table><tr><td class='
-    if (lvl == 1) {x += '"c100" ';} else {x += '"t100" ';}
-    x += 'onclick="story_books(';
-    x += lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">';
-    x += '<b>' + sect_no + ". " + section_header(lvl, sect_no) + '</b>';
-    x += '</td></tr></table>';
-    document.getElementById("hdr_tbl").innerHTML = x;
-	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
-};
-
-function story_tlr(lvl, sect_no, chap_no) {
     var trlr_class = 'class="c20"'
     if (lvl == 2) {trlr_class = 'class="t20"';};
 	var nextchap = chap_no + 1;
@@ -102,8 +90,8 @@ function story_tlr(lvl, sect_no, chap_no) {
         y += ' <td ' + trlr_class + ' onclick="story_open(' + lvl + ',' + nextsect + ',' + nextchap + ')">Next</td>';
     };
     y += '</tr></table>';
-    document.getElementById("btm_tbl").innerHTML = y;
-	if(lsTest()) {localStorage.setItem("jbsb_v11_bottom_table",y);};
+    document.getElementById("hdr_tbl").innerHTML = y;
+	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",y);};
 };
 
 function story_text(lvl, sect_no, chap_no) {
@@ -111,7 +99,8 @@ function story_text(lvl, sect_no, chap_no) {
     var vlen = vlist.length
     var verselist = ""
     var m = 0
-    var x = "<br><h2>" + chap_no + ". " + section_chapter(lvl, sect_no, chap_no) + "</h2>";
+    var x = "<br><h2>" + sect_no + ". " + section_header(lvl, sect_no) + "</h2>";
+    x += "<h3>" + chap_no + ". " + section_chapter(lvl, sect_no, chap_no) + "</h3>";
     var prevchap = "";
     var currchap = "";
     for (h=0; h < vlen; h++) {
@@ -161,7 +150,6 @@ function story_text(lvl, sect_no, chap_no) {
 
     document.getElementById("disp_txt").innerHTML = x;
     hide_disp_tbl();
-    hide_select_option();
     hide_results()
 	if(lsTest()) {localStorage.setItem("jbsb_v11_body_text",x);};
 };

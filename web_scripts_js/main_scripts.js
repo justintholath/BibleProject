@@ -25,12 +25,10 @@ function chapter_open(x_b_no, x_c_no, v_mode) {
     if  (x_c_no == 0) {x_c_no = 1}
     build_hdr(x_b_no, x_c_no, maxchap);
     fetch_chapter(x_b_no, x_c_no, v_mode);
-    // fetch_chapter sets the flags which are used in the trailer. So, the order here is important
-    build_tlr(x_b_no, x_c_no, maxchap);
     if (disp_tbl_flag == 1) {
         chapter_tbl(x_b_no,maxchap)
     };
-    var_coordinates = (100 + x_b_no).toString().substring(1,3) + "+" + (1000 + x_c_no).toString().substring(1,4)
+    var_coordinates = (100 + x_b_no).toString().substring(1,3) + ":" + (1000 + x_c_no).toString().substring(1,4)
 	if(lsTest()) {localStorage.setItem("jbsb_v11_coordinates",var_coordinates);};
 }
 
@@ -39,62 +37,149 @@ function build_hdr(book_no, chap_no, maxchap) {
     var x = '<table><tr>';
     x += ' <td class="c20" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
     x += ' <td class="c20" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
-    x += ' <td class="c20" onclick="option_display()">Settings</td>';
-    x += ' <td class="c20" onclick="Introductionfn()">Home</td>';
-    x += ' <td class="c20" onclick="disp_bible_help()">Help</td>';
+    x += ' <td class="c20" onclick="display_menu(' + book_no + ',' + chap_no + ',' + maxchap + ')">More</td>';
+	var nextchap = chap_no + 1;
+	var prevchap = chap_no - 1;
+    if (chap_no == 1) {
+		x += ' <td class="v20"></td>';
+	}
+	else {
+        x += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + prevchap + ',0)">Prev</td>';
+    };
+    if  (chap_no == maxchap) {
+        x += ' <td class="v20"></td>';
+    }
+    else {
+        x += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + nextchap + ',0)">Next</td>';
+    };
+    //x += ' <td class="c20" onclick="Introductionfn()">Home</td>';
+    //x += ' <td class="c20" onclick="option_display()">Settings</td>';
+    //x += ' <td class="c20" onclick="disp_bible_help()">Help</td>';
     x += '</tr></table>';
     document.getElementById("hdr_tbl").innerHTML = x;
 	if(lsTest()) {localStorage.setItem("jbsb_v11_header_table",x);};
 };
 
-function build_tlr(book_no, chap_no, maxchap) {
-	var nextchap = chap_no + 1;
-	var prevchap = chap_no - 1;
-	var y = '<table><tr>';
-    switch (read_mode) {
-    case 0:
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
-        break;
+function display_menu(book_no, chap_no, maxchap) {
+	var x = '<table><tr>';
+    x += '<td class="c20" onclick="Navigate(1)">Home</td>';
+    x += '<td class="c20" onclick="Navigate(2)">' + story_names(1) + '</td>'
+    x += '<td class="c20" onclick="Navigate(3)">' + story_names(2) + '</td>'
+    x += '<td class="c20" onclick="Navigate(4)">Help</td>';
+    x += '<td class="c20" onclick="ClosePop()">Close</td>';
+    x += '</tr></table>';
+    x += '<br>'
+	x += '<table><tr>';
+    x += ' <td class="c20" onclick="Read(' + "'b'" + ')">BSB</td>';
+    x += ' <td class="c20" onclick="Read(' + "'w'" + ')">WEB</td>';
+    x += ' <td class="c20" onclick="Read(' + "'k'" + ')">KJV</td>';
+    x += ' <td class="c20" onclick="Read(' + "'y'" + ')">YLT</td>';
+    x += ' <td class="c20" onclick="ReadAll()">All</td>';
+    x += '</tr></table>';
+    x += '<br>'
+    x += '<table><tr>'
+    x += '<td class="w14">BSB <input id="opt1_bsb" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">WEB <input id="opt1_web" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">KJV <input id="opt1_kjv" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
+    x += '<td class="c14" onclick="set_option()">Apply</td>';
+    x += '</tr></table>';
+/*    alert(x); */
+    txt_modal.innerHTML = x;
+
+    var var_opt1_bsb = document.getElementById("opt1_bsb");
+    var var_opt1_web = document.getElementById("opt1_web");
+    var var_opt1_kjv = document.getElementById("opt1_kjv");
+    var var_opt1_ylt = document.getElementById("opt1_ylt");
+    var var_opt1_lxx = document.getElementById("opt1_lxx");
+    var var_opt1_nte = document.getElementById("opt1_nte");
+    if (foption[1] == "b") {var_opt1_bsb.checked = true}
+    if (foption[2] == "w") {var_opt1_web.checked = true}
+    if (foption[3] == "k") {var_opt1_kjv.checked = true}
+    if (foption[4] == "y") {var_opt1_ylt.checked = true}
+    if (foption[5] == "l") {var_opt1_lxx.checked = true}
+    if (foption[6] == "n") {var_opt1_nte.checked = true}
+
+    modal.style.display = "block";
+};
+
+function Navigate(in_val) {
+    switch(in_val) {
     case 1:
-        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
+        Introductionfn()
+        ClosePop()
         break;
     case 2:
-        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
+        story_resume(1)
+        ClosePop()
         break;
     case 3:
-        y += ' <td class="c20" onclick="Option(' + '0' + ')">Read</td>';
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
+        story_resume(2)
+        ClosePop()
         break;
-    default:
-        read_mode = 0;
-        y += ' <td class="c20" onclick="Option(' + '1' + ')">Mode1</td>';
-        y += ' <td class="c20" onclick="Option(' + '2' + ')">Mode2</td>';
-        y += ' <td class="c20" onclick="Option(' + '3' + ')">Mode3</td>';
+    case 4:
+        disp_bible_help()
+        ClosePop()
         break;
     };
-    if (chap_no == 1) {
-		y += ' <td class="v20"></td>';
-	}
-	else {
-        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + prevchap + ',0)">Prev</td>';
-    };
-    if  (chap_no == maxchap) {
-        y += ' <td class="v20"></td>';
-    }
-    else {
-        y += ' <td class="c20" onclick="chapter_open(' + book_no + ',' + nextchap + ',0)">Next</td>';
-    };
-    y += '</tr></table>';
-    document.getElementById("btm_tbl").innerHTML = y;
-	if(lsTest()) {localStorage.setItem("jbsb_v11_bottom_table",y);};
+}
+
+function Read(in_val) {
+    foption[0] = in_val;
+    foption[7] = "1";
+    chapter_resume();
+    ClosePop()
+    newoption =  foption[0] + ":" + foption[1] + ':' + foption[2] + ':' + foption[3] + ':' + foption[4] + ':' + foption[5] + ":" + foption[6] + ":" + foption[7];
+    if(lsTest()) {localStorage.setItem("jbsb_v11_foption",newoption);};
 };
+
+function ReadAll() {
+    foption[7] = "3";
+    chapter_resume();
+    ClosePop()
+    newoption =  foption[0] + ":" + foption[1] + ':' + foption[2] + ':' + foption[3] + ':' + foption[4] + ':' + foption[5] + ":" + foption[6] + ":" + foption[7];
+    if(lsTest()) {localStorage.setItem("jbsb_v11_foption",newoption);};
+};
+
+function set_option() {
+    foption[1] = "_";
+    foption[2] = "_";
+    foption[3] = "_";
+    foption[4] = "_";
+    foption[5] = "_";
+    foption[6] = "_";
+    foption[7] = '2';
+
+    var var_opt1_bsb = document.getElementById("opt1_bsb");
+    var var_opt1_web = document.getElementById("opt1_web");
+    var var_opt1_kjv = document.getElementById("opt1_kjv");
+    var var_opt1_ylt = document.getElementById("opt1_ylt");
+    var var_opt1_lxx = document.getElementById("opt1_lxx");
+    var var_opt1_nte = document.getElementById("opt1_nte");
+
+    if  (var_opt1_bsb.checked) {foption[1] = "b";};
+    if  (var_opt1_web.checked) {foption[2] = "w";};
+    if  (var_opt1_kjv.checked) {foption[3] = "k";};
+    if  (var_opt1_ylt.checked) {foption[4] = "y";};
+    if  (var_opt1_lxx.checked) {foption[5] = "l";};
+    if  (var_opt1_nte.checked) {foption[6] = "n";};
+
+    newoption1  = foption[1] + ':' + foption[2] + ':' + foption[3] + ':' + foption[4] + ':' + foption[5]
+
+    if  (newoption1 == "_:_:_:_:_") {
+        foption[1] = 'b';
+        foption[4] = 'y';
+        newoption1  = "b:_:_:y:_";
+    };
+
+    newoption =  foption[0] + ":" + newoption1 + ":" + foption[6] + ":" + foption[7];
+    ClosePop()
+    if(lsTest()) {localStorage.setItem("jbsb_v11_foption",newoption);};
+    chapter_resume();
+};
+
 
 function fetch_chapter(x_b_no, x_c_no, v_mode) {
     var maxverse = verse_max(x_b_no, x_c_no);
@@ -107,10 +192,10 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
     var mycount = 0;
     var tempstr = ""
     //alert(var_read_version)
-    switch (read_mode) {
-    case 0:
+    switch (foption[7]) {
+    case "1":
         mycount = 1
-        switch (var_read_version) {
+        switch (foption[0]) {
         case 'b':
             bsbyes = 1;
             break;
@@ -128,37 +213,22 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
             break;
         };
         break;
-    case 1:
-        if (var_opt1_bsb.checked) {bsbyes = 1; mycount +=1};
-        if (var_opt1_web.checked) {webyes = 1; mycount +=1};
-        if (var_opt1_kjv.checked) {kjvyes = 1; mycount +=1};
-        if (var_opt1_ylt.checked) {yltyes = 1; mycount +=1};
-        if (var_opt1_lxx.checked) {lxxyes = 1; mycount +=1};
-        if (var_opt1_nte.checked) {nteyes = 1};
-        if (mycount < 1){bsbyes = 1; mycount =1; set_option();}
+    case "2":
+        if (foption[1] == "b") {bsbyes = 1; mycount +=1};
+        if (foption[2] == "w") {webyes = 1; mycount +=1};
+        if (foption[3] == "k") {kjvyes = 1; mycount +=1};
+        if (foption[4] == "y") {yltyes = 1; mycount +=1};
+        if (foption[5] == "l") {lxxyes = 1; mycount +=1};
+        if (foption[6] == "n") {nteyes = 1};
+        if (mycount < 1){bsbyes = 1; yltyes = 1; mycount =2;}
         break;
-    case 2:
-        if (var_opt2_bsb.checked) {bsbyes = 1; mycount +=1};
-        if (var_opt2_web.checked) {webyes = 1; mycount +=1};
-        if (var_opt2_kjv.checked) {kjvyes = 1; mycount +=1};
-        if (var_opt2_ylt.checked) {yltyes = 1; mycount +=1};
-        if (var_opt2_lxx.checked) {lxxyes = 1; mycount +=1};
-        if (var_opt2_nte.checked) {nteyes = 1};
-        if (mycount < 1){bsbyes = 1;yltyes = 1; mycount = 2; set_option();}
-        break;
-    case 3:
-        if (var_opt3_bsb.checked) {bsbyes = 1; mycount +=1};
-        if (var_opt3_web.checked) {webyes = 1; mycount +=1};
-        if (var_opt3_kjv.checked) {kjvyes = 1; mycount +=1};
-        if (var_opt3_ylt.checked) {yltyes = 1; mycount +=1};
-        if (var_opt3_lxx.checked) {lxxyes = 1; mycount +=1};
-        if (var_opt3_nte.checked) {nteyes = 1};
-        if (mycount < 1){bsbyes = 1; webyes = 1; kjvyes = 1; yltyes = 1; lxxyes = 1; nteyes = 1; mycount = 5; set_option();}
+    case "3":
+        mycount = 5
+        bsbyes = 1; webyes = 1; kjvyes = 1; yltyes = 1; lxxyes = 1; nteyes = 1;
         break;
     default:
+        mycount = 1
         bsbyes = 1;
-        mycount = 1;
-        set_option();
     };
     //alert("my count " + mycount + " bsb-" + bsbyes + " web-" + webyes + " kjv-" + kjvyes + " ylt-" + yltyes + " lxx-" + lxxyes)
     if (mycount == 1) {
@@ -247,7 +317,6 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
     x += "<br><br><br><br><br></p>"
     document.getElementById("disp_txt").innerHTML = x;
     hide_disp_tbl();
-    hide_select_option();
     hide_results()
     window.location.href = ("#Top");
 	if(lsTest()) {localStorage.setItem("jbsb_v11_body_text",x);};
@@ -394,7 +463,11 @@ function AllBooks(book_no) {
         x += ' <td class="c50" onclick="AllBooks(1)">Old</td>'
         x += ' <td class="o50">New</td>'
         x += '</tr></table><br>'
-      x += booklist_nt()
+        if (window.innerWidth <= 768) {
+           x += shortlist_nt()
+        } else {
+           x += booklist_nt()
+        };
     };
     x += '<table><tr>';
     x += '<td class="w80" colspan="4"></td>';
@@ -525,5 +598,56 @@ function booklist_nt() {
     x += '</tr></table><br>'
     return x;
 };
+
+function shortlist_nt() {
+    var x = '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(40)">Mat</td>'
+    x += ' <td class="c20" onclick="book_open(41)">Mar</td>'
+    x += ' <td class="c20" onclick="book_open(42)">Luk</td>'
+    x += ' <td class="c20" onclick="book_open(43)">Joh</td>'
+    x += ' <td class="c20" onclick="book_open(44)">Act</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(45)">Rom</td>'
+    x += ' <td class="c20" onclick="book_open(46)">1Co</td>'
+    x += ' <td class="c20" onclick="book_open(47)">2Co</td>'
+    x += ' <td class="c20" onclick="book_open(48)">Gal</td>'
+    x += ' <td class="c20" onclick="book_open(49)">Eph</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(50)">Php</td>'
+    x += ' <td class="c20" onclick="book_open(51)">Col</td>'
+    x += ' <td class="c20" onclick="book_open(52)">1Th</td>'
+    x += ' <td class="c20" onclick="book_open(53)">2Th</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(54)">1Ti</td>'
+    x += ' <td class="c20" onclick="book_open(55)">2Ti</td>'
+    x += ' <td class="c20" onclick="book_open(56)">Tit</td>'
+    x += ' <td class="c20" onclick="book_open(57)">Phm</td>'
+    x += ' <td class="c20" onclick="book_open(58)">Heb</td>'
+    x += '</tr></table><br>'
+    x += '<table><tr>'
+    x += ' <td class="c20" onclick="book_open(59)">Jam</td>'
+    x += ' <td class="c20" onclick="book_open(60)">1Pe</td>'
+    x += ' <td class="c20" onclick="book_open(61)">2Pe</td>'
+    x += '</tr>'
+    x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(62)">1Jo</td>'
+    x += ' <td class="c20" onclick="book_open(63)">2Jo</td>'
+    x += ' <td class="c20" onclick="book_open(64)">3Jo</td>'
+    x += ' <td class="c20" onclick="book_open(65)">Jud</td>'
+    x += ' <td class="c20" onclick="book_open(66)">Rev</td>'
+    x += '</tr></table><br>'
+    return x;
+};
+function hide_disp_tbl() {
+    document.getElementById("disp_tbl").style.display = 'none';
+};
+
+function hide_results() {
+    document.getElementById("srch_results").style.display = 'none';
+};
+
 
 

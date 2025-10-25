@@ -5,20 +5,16 @@ function Introductionfn() {
 	//localStorage.removeItem("jbsb_v11_coordinates");
 	//localStorage.removeItem("jbsb_v11_foption");
     var x = '<table><tr>';
-    x += '<td class="c25" onclick="chapter_resume()">1. Bible</td>'
-    x += '<td class="c25" onclick="story_resume(1)">2. ' + story_names(1) + '</td>'
-    x += '<td class="c25" onclick="story_resume(2)">3. ' + story_names(2) + '</td>'
-    x += '<td class="c25" onclick="option_display()">Settings</td>'
+    x += '<td class="c33" onclick="chapter_resume()">1. Bible</td>'
+    x += '<td class="c33" onclick="story_resume(1)">2. ' + story_names(1) + '</td>'
+    x += '<td class="c33" onclick="story_resume(2)">3. ' + story_names(2) + '</td>'
     x += '</tr></table>'
     document.getElementById("hdr_tbl").innerHTML = x;
-    document.getElementById("btm_tbl").innerHTML = "";
     document.getElementById("disp_tbl").style.display = 'none';
-    document.getElementById("select_option").style.display = 'none';
     document.getElementById("disp_txt").innerHTML = intro_text();
 };
 
 function disp_bible_help() {
-    hide_select_option();
     var x = '<br><br><table><tr>';
     x += '<td class="wl80"></td>';
     x += '<td class="g20" onclick="hide_results()"><b>Close Help</b></td>'
