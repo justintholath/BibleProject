@@ -335,13 +335,9 @@ function story_skipped(lvl, sect_no, chap_no) {
     if (v_skipped == 0) {
         x = "<br><br><br><br> Nothing Skipped <br><br><br><br>"
     };
+    x += '<span style="color:blue;cursor: pointer;" onclick="story_resume(' + lvl + ')"><u>Back to Story</u></span><br><br><br>'
+
     document.getElementById("disp_txt").innerHTML = x;
-    /* Amend the bottom table */
-	var y = '<table><tr>';
-    y += ' <td class="c50" onclick="chapter_resume()">Go to Bible</td>';
-    y += ' <td class="c50" onclick="story_open(' + lvl + ',' + sect_no + ',' + chap_no + ')">Back to Story</td>';
-    y += '</tr></table>';
-    document.getElementById("btm_tbl").innerHTML = y;
     window.location.href = ("#Top");
 };
 

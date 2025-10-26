@@ -237,33 +237,30 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
         bsbyes = 1;
     };
     //alert("my count " + mycount + " bsb-" + bsbyes + " web-" + webyes + " kjv-" + kjvyes + " ylt-" + yltyes + " lxx-" + lxxyes)
+    var bsb_pfx = '<font style="color:Black">'
+    var web_pfx = '<font style="color:DarkGreen">'
+    var kjv_pfx = '<font style="color:Teal">'
+    var ylt_pfx = '<font style="color:SaddleBrown">'
+    var lxx_pfx = '<font style="color:olive">'
+    var notes_pfx = '<font style="color:red">Notes:'
+    var xref_pfx = '<font style="color:purple">Xref:'
+    var Verse_pfx = "<u>"; 
+    var Verse_sfx = "</u>";
+    var sfx = '</font><br>'
     if (mycount == 1) {
         if (bsbyes == 1) {tempstr = "Version: BSB "}
         if (webyes == 1) {tempstr = "Version: WEB "}
         if (kjvyes == 1) {tempstr = "Version: KJV "}
         if (yltyes == 1) {tempstr = "Version: YLT "}
         if (lxxyes == 1) {tempstr = "Version: LXX "}
-        var Verse_pfx = "<u><b> "; 
-        var Verse_sfx = "</b></u>";
-        var bsb_pfx = '<font style="color:Black"> '
-        var web_pfx = '<font style="color:DarkGreen"> '
-        var kjv_pfx = '<font style="color:LightCoral"> '
-        var ylt_pfx = '<font style="color:SaddleBrown"> '
-        var lxx_pfx = '<font style="color:olive"> '
-        var notes_pfx = '<font style="color:red">Notes: '
-        var xref_pfx = '<font style="color:purple">Xref: '
-        var sfx = '</font><br>'
     } else {
-        var Verse_pfx = "<h5><u>Verse "; 
-        var Verse_sfx = "</u></h5>";
-        var bsb_pfx = '<font style="color:Black">[BSB] '
-        var web_pfx = '<font style="color:DarkGreen">[WEB] '
-        var kjv_pfx = '<font style="color:LightCoral">[KJV] '
-        var ylt_pfx = '<font style="color:SaddleBrown">[YLT] '
-        var lxx_pfx = '<font style="color:olive">[LXX] '
-        var notes_pfx = '<font style="color:red">Notes: '
-        var xref_pfx = '<font style="color:purple">Xref: '
-        var sfx = '</font><br>'
+        Verse_pfx += "Verse "; 
+        Verse_sfx += "<br>";
+        bsb_pfx += '[BSB] '
+        web_pfx += '[WEB] '
+        kjv_pfx += '[KJV] '
+        ylt_pfx += '[YLT] '
+        lxx_pfx += '[LXX] '
     };
     var x = '<p><h4>' + tempstr + fetch_name(x_b_no) + " " + x_c_no + '</h4>'
     if (chap_titles(x_b_no, x_c_no).length > 0) {
@@ -279,31 +276,31 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
         clickid  = '<a id="V' + i + '"></a>'
         x += clickid + '<span style="color:blue;cursor: pointer;"' + clickstr + '>' + Verse_pfx + i + Verse_sfx + '</span>'
         if  (bsbyes == 1) {
-            x += bsb_pfx + bsb_fetch(x_b_no, x_c_no, i) + sfx;
+            x += bsb_pfx + ' ' + bsb_fetch(x_b_no, x_c_no, i) + sfx;
         };
         if  (webyes == 1) {
-            x += web_pfx + web_fetch(x_b_no, x_c_no, i) + sfx;
+            x += web_pfx + ' ' + web_fetch(x_b_no, x_c_no, i) + sfx;
         };
         if  (kjvyes == 1) {
-            x += kjv_pfx + kjv_fetch(x_b_no, x_c_no, i) + sfx;
+            x += kjv_pfx + ' ' + kjv_fetch(x_b_no, x_c_no, i) + sfx;
         };
         if  (yltyes == 1) {
-            x += ylt_pfx + ylt_fetch(x_b_no, x_c_no, i) + sfx;
+            x += ylt_pfx + ' ' + ylt_fetch(x_b_no, x_c_no, i) + sfx;
         };
         if  (lxxyes == 1) {
             if  (x_b_no <= 39) {
-                x += lxx_pfx + lxx_fetch(x_b_no, x_c_no, i) + sfx;
+                x += lxx_pfx + ' ' + lxx_fetch(x_b_no, x_c_no, i) + sfx;
             };
         };
         if  (nteyes > 0) {
             note1 = kjm_notes(x_b_no, x_c_no, i)
             notex = kjm_xref(x_b_no, x_c_no, i)
             if (note1.length > 0) {
-                x += notes_pfx + note1 + sfx;
+                x += notes_pfx + ' ' + note1 + sfx;
             };
             notex_len = notex.length
             if (notex_len > 0) {
-                x += xref_pfx;
+                x += xref_pfx + ' ';
                 notex_loop = notex_len / 8;
                 for (notex_i = 0; notex_i < notex_loop; notex_i++) {
                     notex_element = notex.substring(0,8)
@@ -332,23 +329,13 @@ function fetch_chapter(x_b_no, x_c_no, v_mode) {
 function displaytext2(bno, cno, vno, maxverse) {
 	var prevno = vno - 1;
 	var nextno = vno + 1;
-    var web_pfx = '<font style="color:Black">[WEB] '
-    var kjv_pfx = '<font style="color:DarkGreen">[KJV] '
-    var bsb_pfx = '<font style="color:LightCoral">[BSB] '
+    var bsb_pfx = '<font style="color:Black">[BSB] '
+    var web_pfx = '<font style="color:DarkGreen">[WEB] '
+    var kjv_pfx = '<font style="color:Teal">[KJV] '
     var ylt_pfx = '<font style="color:SaddleBrown">[YLT] '
     var lxx_pfx = '<font style="color:olive">[LXX] '
-    var rvwCtitle = fetch_name(bno) + " " + (1000 + cno).toString().substring(1)
-    var rvwVtitle = rvwCtitle + ":" + (1000 + vno).toString().substring(1)
-    var x = '<p>' + rvwVtitle + '<br><br>';
-    x += web_pfx + web_fetch(bno, cno, vno) + '</font><br>';
-    x += kjv_pfx + kjv_fetch(bno, cno, vno) + '</font><br>';
-    x += bsb_pfx + bsb_fetch(bno, cno, vno) + '</font><br>';
-    x += ylt_pfx + ylt_fetch(bno, cno, vno) + '</font><br>';
-    if  (bno <= 39) {
-         x += lxx_pfx + lxx_fetch(bno, cno, vno) + '</font><br>';
-    };
-    x += '<br>'
-	x += '<table><tr>';
+    var rvwVtitle = fetch_name(bno) + " " + cno + ":" + vno
+	var x = '<table><tr>';
     x += ' <td class="c25" onclick="ClosePop()">Close</td>';
     if (vno == 1) {
 		x += ' <td class="v25"></td>';
@@ -363,6 +350,14 @@ function displaytext2(bno, cno, vno, maxverse) {
         x += ' <td class="c25" onclick="displaytext2(' + bno + ',' + cno + ',' + nextno + ',' + maxverse + ')">Next</td>';
     };
     x += '</tr></table>';
+    x += '<p>' + rvwVtitle + '<br><br>';
+    x += bsb_pfx + bsb_fetch(bno, cno, vno) + '</font><br>';
+    x += web_pfx + web_fetch(bno, cno, vno) + '</font><br>';
+    x += kjv_pfx + kjv_fetch(bno, cno, vno) + '</font><br>';
+    x += ylt_pfx + ylt_fetch(bno, cno, vno) + '</font><br>';
+    if  (bno <= 39) {
+         x += lxx_pfx + lxx_fetch(bno, cno, vno) + '</font><br>';
+    };
     x += '</p>';
 /*    alert(x); */
     txt_modal.innerHTML = x;
@@ -468,11 +463,7 @@ function AllBooks(book_no) {
         if (window.innerWidth <= 768) {
             x += shortlist_ot()
         } else {
-            x += booklist_law()
-            x += booklist_history()
-            x += booklist_wisdom()
-            x += booklist_lxxmajor()
-            x += booklist_minor()
+            x += fulllist_ot()
         };
     } else {
         x += '<table><tr>'
@@ -485,29 +476,20 @@ function AllBooks(book_no) {
            x += booklist_nt()
         };
     };
-    x += '<table><tr>';
-    x += '<td class="w80" colspan="4"></td>';
-    x += '<td class="g20" onclick="hide_disp_tbl()"><b>Cancel</b></td>'
-    x += '</tr>';
-    x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
     window.location.href = ("#Top");
 };
 
-function booklist_law() {
+function fulllist_ot() {
     var x = '<table><tr>'
     x += ' <td class="c20" onclick="book_open(1)">Genesis</td>'
     x += ' <td class="c20" onclick="book_open(2)">Exodus</td>'
     x += ' <td class="c20" onclick="book_open(3)">Leviticus</td>'
     x += ' <td class="c20" onclick="book_open(4)">Numbers</td>'
     x += ' <td class="c20" onclick="book_open(5)">Deuteronomy</td>'
-    x += '</tr></table><br>'
-    return x;
-};
-
-function booklist_history() {
-    var x = '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(6)">Joshua</td>'
     x += ' <td class="c20" onclick="book_open(7)">Judges</td>'
     x += ' <td class="c20" onclick="book_open(31)">Ruth</td>'
@@ -517,41 +499,29 @@ function booklist_history() {
     x += '<tr>'
     x += ' <td class="c20" onclick="book_open(10)">1 Kings</td>'
     x += ' <td class="c20" onclick="book_open(11)">2 Kings</td>'
-    x += ' <td class="c20" onclick="book_open(38)">1 Chronicles</td>'
-    x += ' <td class="c20" onclick="book_open(39)">2 Chronicles</td>'
     x += '</tr>'
     x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(38)">1 Chronicles</td>'
+    x += ' <td class="c20" onclick="book_open(39)">2 Chronicles</td>'
     x += ' <td class="c20" onclick="book_open(36)">Ezra</td>'
     x += ' <td class="c20" onclick="book_open(37)">Nehemiah</td>'
     x += ' <td class="c20" onclick="book_open(34)">Esther</td>'
-    x += '</tr></table><br>'
-    return x;
-};
-
-function booklist_wisdom() {
-    var x = '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(29)">Job</td>'
     x += ' <td class="c20" onclick="book_open(27)">Psalms</td>'
     x += ' <td class="c20" onclick="book_open(28)">Proverbs</td>'
     x += ' <td class="c20" onclick="book_open(33)">Ecclesiastes</td>'
     x += ' <td class="c20" onclick="book_open(30)">SongofSongs</td>'
-    x += '</tr></table><br>'
-    return x;
-};
-
-function booklist_lxxmajor() {
-    var x = '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(12)">Isaiah</td>'
     x += ' <td class="c20" onclick="book_open(13)">Jeremiah</td>'
     x += ' <td class="c20" onclick="book_open(14)">Ezekiel</td>'
     x += ' <td class="c20" onclick="book_open(32)">Lamentations</td>'
     x += ' <td class="c20" onclick="book_open(35)">Daniel</td>'
-    x += '</tr></table><br>'
-    return x;
-};
-
-function booklist_minor() {
-    var x = '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(15)">Hosea</td>'
     x += ' <td class="c20" onclick="book_open(16)">Joel</td>'
     x += ' <td class="c20" onclick="book_open(17)">Amos</td>'
@@ -568,7 +538,10 @@ function booklist_minor() {
     x += '<tr>'
     x += ' <td class="c20" onclick="book_open(25)">Zechariah</td>'
     x += ' <td class="c20" onclick="book_open(26)">Malachi</td>'
-    x += '</tr></table><br>'
+    x += '<td class="w20"></td>';
+    x += '<td class="g40" colspan="4" onclick="hide_disp_tbl()"><b>Close</b></td>'
+    x += '</tr>';
+    x += '</table>'
     return x;
 };
 
@@ -579,8 +552,8 @@ function shortlist_ot() {
     x += ' <td class="c20" onclick="book_open(3)">Lev</td>'
     x += ' <td class="c20" onclick="book_open(4)">Num</td>'
     x += ' <td class="c20" onclick="book_open(5)">Deu</td>'
-    x += '</tr></table><br>'
-    x += '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(6)">Jos</td>'
     x += ' <td class="c20" onclick="book_open(7)">Jdg</td>'
     x += ' <td class="c20" onclick="book_open(31)">Rut</td>'
@@ -590,29 +563,29 @@ function shortlist_ot() {
     x += '<tr>'
     x += ' <td class="c20" onclick="book_open(10)">1Ki</td>'
     x += ' <td class="c20" onclick="book_open(11)">2Ki</td>'
-    x += ' <td class="c20" onclick="book_open(38)">1Ch</td>'
-    x += ' <td class="c20" onclick="book_open(39)">2Ch</td>'
     x += '</tr>'
     x += '<tr>'
+    x += ' <td class="c20" onclick="book_open(38)">1Ch</td>'
+    x += ' <td class="c20" onclick="book_open(39)">2Ch</td>'
     x += ' <td class="c20" onclick="book_open(36)">Ezr</td>'
     x += ' <td class="c20" onclick="book_open(37)">Neh</td>'
     x += ' <td class="c20" onclick="book_open(34)">Est</td>'
-    x += '</tr></table><br>'
-    x += '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(29)">Job</td>'
     x += ' <td class="c20" onclick="book_open(27)">Psa</td>'
     x += ' <td class="c20" onclick="book_open(28)">Pro</td>'
     x += ' <td class="c20" onclick="book_open(33)">Ecc</td>'
     x += ' <td class="c20" onclick="book_open(30)">Son</td>'
-    x += '</tr></table><br>'
-    x += '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(12)">Isa</td>'
     x += ' <td class="c20" onclick="book_open(13)">Jer</td>'
     x += ' <td class="c20" onclick="book_open(14)">Eze</td>'
     x += ' <td class="c20" onclick="book_open(32)">Lam</td>'
     x += ' <td class="c20" onclick="book_open(35)">Dan</td>'
-    x += '</tr></table><br>'
-    x += '<table><tr>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(15)">Hos</td>'
     x += ' <td class="c20" onclick="book_open(16)">Joe</td>'
     x += ' <td class="c20" onclick="book_open(17)">Amo</td>'
@@ -629,6 +602,8 @@ function shortlist_ot() {
     x += '<tr>'
     x += ' <td class="c20" onclick="book_open(25)">Zec</td>'
     x += ' <td class="c20" onclick="book_open(26)">Mal</td>'
+    x += '<td class="w20"></td>';
+    x += '<td class="g40" colspan="4" onclick="hide_disp_tbl()"><b>Close</b></td>'
     x += '</tr></table><br>'
     return x;
 };
@@ -666,13 +641,14 @@ function booklist_nt() {
     x += ' <td class="c20" onclick="book_open(59)">James</td>'
     x += ' <td class="c20" onclick="book_open(60)">1 Peter</td>'
     x += ' <td class="c20" onclick="book_open(61)">2 Peter</td>'
-    x += '</tr>'
-    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(62)">1 John</td>'
     x += ' <td class="c20" onclick="book_open(63)">2 John</td>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(64)">3 John</td>'
     x += ' <td class="c20" onclick="book_open(65)">Jude</td>'
     x += ' <td class="c20" onclick="book_open(66)">Revelation</td>'
+    x += '<td class="g40" colspan="4" onclick="hide_disp_tbl()"><b>Close</b></td>'
     x += '</tr></table><br>'
     return x;
 };
@@ -709,13 +685,14 @@ function shortlist_nt() {
     x += ' <td class="c20" onclick="book_open(59)">Jam</td>'
     x += ' <td class="c20" onclick="book_open(60)">1Pe</td>'
     x += ' <td class="c20" onclick="book_open(61)">2Pe</td>'
-    x += '</tr>'
-    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(62)">1Jo</td>'
     x += ' <td class="c20" onclick="book_open(63)">2Jo</td>'
+    x += '</tr>'
+    x += '<tr>'
     x += ' <td class="c20" onclick="book_open(64)">3Jo</td>'
     x += ' <td class="c20" onclick="book_open(65)">Jud</td>'
     x += ' <td class="c20" onclick="book_open(66)">Rev</td>'
+    x += '<td class="g40" colspan="4" onclick="hide_disp_tbl()"><b>Close</b></td>'
     x += '</tr></table><br>'
     return x;
 };
