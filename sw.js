@@ -7,7 +7,6 @@ const STATIC_ASSETS = [
 './web_scripts_js/offsets_n_counts.js',
 './web_scripts_js/story_scripts.js',
 './data/story_table.js',
-'./manifest.json',
 './data/web/Genesis.js',
 './data/web/Exodus.js',
 './data/web/Leviticus.js',
@@ -74,10 +73,12 @@ const STATIC_ASSETS = [
 './data/web/3John.js',
 './data/web/Jude.js',
 './data/web/Revelation.js',
+'./manifest.json'
 ];
 
 // 1. Install Phase: Save the core app files
 self.addEventListener('install', (event) => {
+    self.skipWaiting(); // Forces the new service worker to become active immediately
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(STATIC_ASSETS);
