@@ -15,6 +15,9 @@ function chapter_open(x_b_no, x_c_no) {
     fetch_chapter(x_b_no, x_c_no);
     if (disp_tbl_flag == 1) {
         chapter_tbl(x_b_no,maxchap)
+    }
+    else {
+        hide_disp_tbl();
     };
     where_am_i = "b"
     bible_book = x_b_no
@@ -77,14 +80,11 @@ function display_menu(Type) {
         x += '<td class="w14">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
         x += '<td class="w14">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
         x += '<td class="w14">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
-        x += '<td class="c20" onclick="set_option(1)">Apply</td>';
         x += '</tr></table>';
         x += '<br>'
         x += '<table><tr>'
-        x += '<td class="o25" onclick="verse_tbl()">Verses</td>';
-        x += '<td class="w25"></td>';
-        x += '<td class="w25"></td>';
-        x += '<td class="w25"></td>';
+        x += '<td class="o50" onclick="verse_tbl()">Select Verse</td>';
+        x += '<td class="c50" onclick="set_option()">Parallel Bible</td>';
         x += '</tr></table>';
     };
 /*    alert(x); */
@@ -137,12 +137,12 @@ function Navigate(in_val) {
 
 function Read(in_val) {
     bible_version = in_val
-    set_option(2)
+    parallel_read = parallel_read.replace("d","")
     ClosePop()
     full_resume()
 };
 
-function set_option(inval) {
+function set_option() {
     var var_opt1_bsb = document.getElementById("opt1_bsb");
     var var_opt1_web = document.getElementById("opt1_web");
     var var_opt1_kjv = document.getElementById("opt1_kjv");
@@ -150,8 +150,7 @@ function set_option(inval) {
     var var_opt1_lxx = document.getElementById("opt1_lxx");
     var var_opt1_nte = document.getElementById("opt1_nte");
 
-    parallel_read = ""
-    if (inval == 1) {parallel_read = "d"}
+    parallel_read = "d"
     if  (var_opt1_web.checked) {parallel_read += "w";};
     if  (var_opt1_bsb.checked) {parallel_read += "b";};
     if  (var_opt1_kjv.checked) {parallel_read += "k";};
@@ -185,7 +184,6 @@ async function fetch_chapter(x_b_no, x_c_no) {
     var nteyes = 0;
     var mycount = 0;
     var tempstr = ""
-    //alert(var_read_version)
     if (parallel_read.includes("d")) {
         if (parallel_read.includes("b")) {bsbyes = 1; mycount +=1};
         if (parallel_read.includes("w")) {webyes = 1; mycount +=1};
@@ -217,7 +215,6 @@ async function fetch_chapter(x_b_no, x_c_no) {
             break;
         };
     };
-    //alert("my count " + mycount + " bsb-" + bsbyes + " web-" + webyes + " kjv-" + kjvyes + " ylt-" + yltyes + " lxx-" + lxxyes)
     if (mycount == 1) {
         if (bsbyes == 1) {tempstr = "Berean Standard Bible "}
         if (webyes == 1) {tempstr = "World English Bible"}
@@ -282,7 +279,6 @@ async function fetch_chapter(x_b_no, x_c_no) {
     };
     x += "<br><br><br><br><br></p>"
     document.getElementById("disp_txt").innerHTML = x;
-    hide_disp_tbl();
     hide_results()
     window.location.href = ("#Top");
 };
