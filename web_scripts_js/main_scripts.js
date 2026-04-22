@@ -234,15 +234,24 @@ async function fetch_chapter(x_b_no, x_c_no) {
 
     let web_chap = []; let bsb_chap = []; let kjv_chap = []; let ylt_chap = []; let lxx_chap = []; let xrf_chap = []; let nte_chap = [];
 
-    if  (webyes == 1) {web_chap = await chap_fetch("web", x_b_no, x_c_no)};
-    if  (bsbyes == 1) {bsb_chap = await chap_fetch("bsb", x_b_no, x_c_no)};
-    if  (kjvyes == 1) {kjv_chap = await chap_fetch("kjv", x_b_no, x_c_no)};
-    if  (yltyes == 1) {ylt_chap = await chap_fetch("ylt", x_b_no, x_c_no)};
-    if  (lxxyes == 1 && x_b_no <= 39) {lxx_chap = await chap_fetch("lxx", x_b_no, x_c_no)};
-    if  (nteyes == 1) {
-        nte_chap = await chap_fetch("nte", x_b_no, x_c_no)
-        xrf_chap = await chap_fetch("xrf", x_b_no, x_c_no)
-    };
+    // 1. Create an array of promises (don't use 'await' yet)
+    let promises = [];
+
+    // We push the function calls into the array so they all start immediately
+    if (webyes == 1) promises.push(chap_fetch("web", x_b_no, x_c_no).then(data => web_chap = data));
+    if (bsbyes == 1) promises.push(chap_fetch("bsb", x_b_no, x_c_no).then(data => bsb_chap = data));
+    if (kjvyes == 1) promises.push(chap_fetch("kjv", x_b_no, x_c_no).then(data => kjv_chap = data));
+    if (yltyes == 1) promises.push(chap_fetch("ylt", x_b_no, x_c_no).then(data => ylt_chap = data));
+    if (lxxyes == 1 && x_b_no <= 39) promises.push(chap_fetch("lxx", x_b_no, x_c_no).then(data => lxx_chap = data));
+
+    if (nteyes == 1) {
+        promises.push(chap_fetch("nte", x_b_no, x_c_no).then(data => nte_chap = data));
+        promises.push(chap_fetch("xrf", x_b_no, x_c_no).then(data => xrf_chap = data));
+    }
+
+    // 2. Now wait for ALL of them to finish at once
+    await Promise.all(promises);
+
 
     var i;
     for (i = 1; i<= maxverse; i++) {
