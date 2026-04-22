@@ -184,34 +184,35 @@ async function fetch_chapter(x_b_no, x_c_no) {
     var nteyes = 0;
     var mycount = 0;
     var tempstr = ""
+    let sumV = ""
     if (parallel_read.includes("d")) {
-        if (parallel_read.includes("b")) {bsbyes = 1; mycount +=1};
-        if (parallel_read.includes("w")) {webyes = 1; mycount +=1};
-        if (parallel_read.includes("k")) {kjvyes = 1; mycount +=1};
-        if (parallel_read.includes("y")) {yltyes = 1; mycount +=1};
-        if (parallel_read.includes("l")) {lxxyes = 1; mycount +=1};
-        if (parallel_read.includes("n")) {nteyes = 1};
+        if (parallel_read.includes("b")) {bsbyes = 1; sumV += "bsb"; mycount +=1};
+        if (parallel_read.includes("w")) {webyes = 1; sumV += "web"; mycount +=1};
+        if (parallel_read.includes("k")) {kjvyes = 1; sumV += "kjv"; mycount +=1};
+        if (parallel_read.includes("y")) {yltyes = 1; sumV += "ylt"; mycount +=1};
+        if (parallel_read.includes("l")) {lxxyes = 1; sumV += "lxx"; mycount +=1};
+        if (parallel_read.includes("n")) {nteyes = 1; sumV += "nte"; };
     }
     else {
         mycount = 1
         switch (bible_version) {
         case 'w':
-            webyes = 1;
+            webyes = 1; sumV += "web";
             break;
         case 'b':
-            bsbyes = 1;
+            bsbyes = 1; sumV += "bsb";
             bsb_pfx = web_pfx
             break;
         case 'k':
-            kjvyes = 1;
+            kjvyes = 1; sumV += "kjv";
             kjv_pfx = web_pfx
             break;
         case 'y':
-            yltyes = 1;
+            yltyes = 1; sumV += "ylt";
             ylt_pfx = web_pfx
             break;
         default:
-            webyes = 1;
+            webyes = 1; sumV += "web";
             break;
         };
     };
@@ -233,26 +234,7 @@ async function fetch_chapter(x_b_no, x_c_no) {
     var x = '<p><h2 style="text-align:center;">' + tempstr + '</h2>'
     x += '<h4>' + fetch_name(x_b_no) + " " + x_c_no + '</h4>'
 
-    let web_chap = []; let bsb_chap = []; let kjv_chap = []; let ylt_chap = []; let lxx_chap = []; let xrf_chap = []; let nte_chap = [];
-
-    // 1. Create an array of promises (don't use 'await' yet)
-    let promises = [];
-
-    // We push the function calls into the array so they all start immediately
-    if (webyes == 1) promises.push(chap_fetch("web", x_b_no, x_c_no).then(data => web_chap = data));
-    if (bsbyes == 1) promises.push(chap_fetch("bsb", x_b_no, x_c_no).then(data => bsb_chap = data));
-    if (kjvyes == 1) promises.push(chap_fetch("kjv", x_b_no, x_c_no).then(data => kjv_chap = data));
-    if (yltyes == 1) promises.push(chap_fetch("ylt", x_b_no, x_c_no).then(data => ylt_chap = data));
-    if (lxxyes == 1 && x_b_no <= 39) promises.push(chap_fetch("lxx", x_b_no, x_c_no).then(data => lxx_chap = data));
-
-    if (nteyes == 1) {
-        promises.push(chap_fetch("nte", x_b_no, x_c_no).then(data => nte_chap = data));
-        promises.push(chap_fetch("xrf", x_b_no, x_c_no).then(data => xrf_chap = data));
-    }
-
-    // 2. Now wait for ALL of them to finish at once
-    await Promise.all(promises);
-
+    await pop_chap(sumV, x_b_no, x_c_no)
 
     var i;
     for (i = 1; i<= maxverse; i++) {
@@ -303,15 +285,8 @@ async function displaytext2(bno, cno, vno) {
     var notes_pfx = '<font style="color:red">Notes:'
     var sfx = '</font><br>'
 
-    let web_chap = []; let bsb_chap = []; let kjv_chap = []; let ylt_chap = []; let lxx_chap = []; let xrf_chap = []; let nte_chap = [];
+    await pop_chap("webbsbkjvyltlxxnte", bno, cno)
 
-    web_chap = await chap_fetch("web", bno, cno);
-    bsb_chap = await chap_fetch("bsb", bno, cno);
-    kjv_chap = await chap_fetch("kjv", bno, cno);
-    ylt_chap = await chap_fetch("ylt", bno, cno);
-    if  (bno <= 39) {lxx_chap = await chap_fetch("lxx", bno, cno);};
-    nte_chap = await chap_fetch("nte", bno, cno);
-    xrf_chap = await chap_fetch("xrf", bno, cno);
 
     var x = '<p>' + fetch_name(bno) + " " + cno + ':' + vno + '<br><br>';
     x += web_pfx + ' ' + web_chap[vno - 1].substring(8) + sfx;

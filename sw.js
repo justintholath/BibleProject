@@ -7,7 +7,7 @@ const STATIC_ASSETS = [
 './web_scripts_js/offsets_n_counts.js',
 './web_scripts_js/story_scripts.js',
 './data/story_table.js',
-'./manifest.json'
+'./manifest.json',
 './data/web/Genesis.js',
 './data/web/Exodus.js',
 './data/web/Leviticus.js',

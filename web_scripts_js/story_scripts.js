@@ -66,12 +66,11 @@ async function story_text(lvl, sect_no, chap_no) {
     x += "<h3>" + chap_no + ". " + section_chapter(lvl, sect_no, chap_no) + "</h3>";
     var prevchap = "";
     var currchap = "";
-    let story_chap = [];
 
-    var story_version = "web";
-    if  (bible_version == "b") {story_version = "bsb"};
-    if  (bible_version == "k") {story_version = "kjv"};
-    if  (bible_version == "y") {story_version = "ylt"};
+    let sumV = "web";
+    if  (bible_version == "b") {sumV = "bsb"};
+    if  (bible_version == "k") {sumV = "kjv"};
+    if  (bible_version == "y") {sumV = "ylt"};
 
     for (h=0; h < vlen; h++) {
         verse_str = vlist[h]
@@ -92,8 +91,24 @@ async function story_text(lvl, sect_no, chap_no) {
                 jve = parseInt(verselist[i].substring(5,8))
                 x += '<font style="color:blue; cursor: pointer;">['
                 x += verse_number_click(jbk, jcp, jve) + "] </font>"
-                story_chap = await chap_fetch(story_version, jbk, jcp)
-                x += story_chap[jve - 1].substring(8);
+                await pop_chap(sumV, jbk, jcp)
+                switch (bible_version) {
+                    case 'w':
+                        x += web_chap[jve - 1].substring(8);
+                        break;
+                    case 'b':
+                        x += bsb_chap[jve - 1].substring(8);
+                        break;
+                    case 'k':
+                        x += kjv_chap[jve - 1].substring(8);
+                        break;
+                    case 'y':
+                        x += ylt_chap[jve - 1].substring(8);
+                        break;
+                    default:
+                        x += web_chap[jve - 1].substring(8);
+                        break;
+                };
                 x += '<br><br>';
                 continue;
             };
@@ -102,11 +117,27 @@ async function story_text(lvl, sect_no, chap_no) {
                 jcp = parseInt(verselist[i].substring(2,5))
                 jve = parseInt(verselist[i].substring(5,8))
                 kve = parseInt(verselist[i].substring(8))
-                story_chap = await chap_fetch(story_version, jbk, jcp)
+                await pop_chap(sumV, jbk, jcp)
                 for (vi = jve; vi <= kve; vi++) {
                     x += '<font style="color:blue; cursor: pointer;">['
                     x += verse_number_click(jbk, jcp, vi) + "] </font>"
-                    x += story_chap[vi - 1].substring(8) + ' ';
+                    switch (bible_version) {
+                        case 'w':
+                            x += web_chap[vi - 1].substring(8);
+                            break;
+                        case 'b':
+                            x += bsb_chap[vi - 1].substring(8);
+                            break;
+                        case 'k':
+                            x += kjv_chap[vi - 1].substring(8);
+                            break;
+                        case 'y':
+                            x += ylt_chap[vi - 1].substring(8);
+                            break;
+                        default:
+                            x += web_chap[vi - 1].substring(8);
+                            break;
+                    };
                 };
 			    x += '<br><br>';
                 continue;

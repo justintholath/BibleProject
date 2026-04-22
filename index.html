@@ -139,6 +139,7 @@ var story_chapter = 1
 var topic_section = 1
 var topic_chapter = 1
 var parallel_read = "wyn"
+var web_chap = []; var bsb_chap = []; var kjv_chap = []; var ylt_chap = []; var lxx_chap = []; var xrf_chap = []; var nte_chap = [];
 
 //alert("loading scripts")
 
@@ -189,7 +190,7 @@ function loadBookScript(version, book_name) {
         };
 
         script.onerror = () => {
-            alert("Connection lost. This book hasn't been saved to your device yet. Try WEB version while offline");
+            console.error(`Offline or file missing: ${script.src}`);
             reject("Offline Error");
         };
 
@@ -225,7 +226,35 @@ async function chap_fetch(version, b_no, c_no) {
     // We use 'await' here so it doesn't return a [object Promise]
     let result = await showVerse(version, fetch_name(b_no), c_no);
     return result;
-}
+};
+
+async function pop_chap(sumV, b_no, c_no) {
+    // 1. Create an array of promises (don't use 'await' yet)
+    let promises = [];
+
+    // We push the function calls into the array so they all start immediately
+    if (sumV.includes("web")) promises.push(chap_fetch("web", b_no, c_no).then(data => web_chap = data));
+    if (sumV.includes("bsb")) promises.push(chap_fetch("bsb", b_no, c_no).then(data => bsb_chap = data));
+    if (sumV.includes("kjv")) promises.push(chap_fetch("kjv", b_no, c_no).then(data => kjv_chap = data));
+    if (sumV.includes("ylt")) promises.push(chap_fetch("ylt", b_no, c_no).then(data => ylt_chap = data));
+    if (sumV.includes("lxx") && b_no <= 39) promises.push(chap_fetch("lxx", b_no, c_no).then(data => lxx_chap = data));
+
+    if (sumV.includes("nte")) {
+        promises.push(chap_fetch("nte", b_no, c_no).then(data => nte_chap = data));
+        promises.push(chap_fetch("xrf", b_no, c_no).then(data => xrf_chap = data));
+    };
+
+    // 2. Now wait for ALL of them to finish at once
+    try {
+        // Run all your fetches
+        // If ANY of them fail due to being offline, it will jump to the catch block
+        await Promise.all(promises);
+
+    } catch (error) {
+        // This only runs ONCE, even if 5 versions failed
+        alert("Connection lost. Some versions haven't been saved to your device yet. Try the WEB version.");
+    };
+};
 
 if(lsTest())
 {
