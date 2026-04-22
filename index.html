@@ -208,7 +208,7 @@ async function showVerse(version, book_name, chapter) {
         try {
             await loadBookScript(version, book_name);
         } catch (e) {
-            return "Error: File could not be loaded.";
+            throw "Offline Error";
         }
     }
 
