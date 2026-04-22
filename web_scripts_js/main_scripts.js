@@ -231,6 +231,7 @@ async function fetch_chapter(x_b_no, x_c_no) {
         lxx_pfx += '[LXX] '
     };
     var x = '<p><h2 style="text-align:center;">' + tempstr + '</h2>'
+    x += '<h4>' + fetch_name(x_b_no) + " " + x_c_no + '</h4>'
 
     let web_chap = []; let bsb_chap = []; let kjv_chap = []; let ylt_chap = []; let lxx_chap = []; let xrf_chap = []; let nte_chap = [];
 
@@ -312,12 +313,7 @@ async function displaytext2(bno, cno, vno) {
     nte_chap = await chap_fetch("nte", bno, cno);
     xrf_chap = await chap_fetch("xrf", bno, cno);
 
-    var x = '<table><tr>';
-    x += ' <td class="c25" onclick="ClosePop()">Close</td>';
-    x += ' <td class="v25"></td>';
-    x += ' <td class="v25"></td>';
-    x += '</tr></table>';
-    x += '<p> Verse ' + vno + '<br><br>';
+    var x = '<p>' + fetch_name(bno) + " " + cno + ':' + vno + '<br><br>';
     x += web_pfx + ' ' + web_chap[vno - 1].substring(8) + sfx;
     x += bsb_pfx + ' ' + bsb_chap[vno - 1].substring(8) + sfx;
     x += kjv_pfx + ' ' + kjv_chap[vno - 1].substring(8) + sfx;
@@ -338,7 +334,13 @@ async function displaytext2(bno, cno, vno) {
         };
         x += sfx;
     };
-    x += '</p><br><br><br><br>';
+    x += '</p>'
+    x += '<table><tr>';
+    x += ' <td class="w25"></td>';
+    x += ' <td class="w25"></td>';
+    x += ' <td class="c25" onclick="ClosePop()">Close</td>';
+    x += '</tr></table>';
+    x += '<br><br><br><br>';
 /*    alert(x); */
     txt_modal.innerHTML = x;
     modal.style.display = "block";

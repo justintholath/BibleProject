@@ -189,8 +189,8 @@ function loadBookScript(version, book_name) {
         };
 
         script.onerror = () => {
-            console.error(`Failed to load script: ${script.src}`);
-            reject();
+            alert("Connection lost. This book hasn't been saved to your device yet. Try WEB version while offline");
+            reject("Offline Error");
         };
 
         document.head.appendChild(script);
