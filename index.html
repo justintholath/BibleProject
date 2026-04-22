@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head> 
+  <title>The Bible Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+<style>
+html {font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+body {font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.42857143;color:#333;background-color:#fff}
+.jtxt {margin:5px; padding:10px;}
+.jchk {width:25px; height:25px;}
+table {width:100%}
+table, th, td {border:1px solid White; border-collapse: collapse; padding:8px;}
+th {text-align: center;}
+td.c10 {text-align: center; width:10%; background-color:#d9edf7; cursor: pointer}
+td.c14 {text-align: center; width:14%; background-color:#d9edf7; cursor: pointer}
+td.c16 {text-align: center; width:16%; background-color:#d9edf7; cursor: pointer}
+td.c20 {text-align: center; width:20%; background-color:#d9edf7; cursor: pointer}
+td.c33 {text-align: center; width:33%; background-color:#d9edf7; cursor: pointer}
+td.c25 {text-align: center; width:25%; background-color:#d9edf7; cursor: pointer}
+td.c50 {text-align: center; width:50%; background-color:#d9edf7; cursor: pointer}
+td.c100 {text-align: center; width:100%; background-color:#d9edf7; cursor: pointer}
+
+td.t20 {text-align: center; width:20%; background-color:#87f5c5; cursor: pointer}
+td.t25 {text-align: center; width:25%; background-color:#87f5c5; cursor: pointer}
+td.t50 {text-align: center; width:50%; background-color:#87f5c5; cursor: pointer}
+td.t100 {text-align: center; width:100%; background-color:#87f5c5; cursor: pointer}
+
+td.g20 {text-align: center; width:20%; background-color:#FFC300; cursor: pointer}
+td.g40 {text-align: center; width:40%; background-color:#FFC300; cursor: pointer}
+td.g50 {text-align: center; width:50%; background-color:#FFC300; cursor: pointer}
+
+td.o10 {text-align: center; width:10%; background-color:#FFE997; cursor: pointer}
+td.o14 {text-align: center; width:14%; background-color:#FFE997; cursor: pointer}
+td.o50 {text-align: center; width:50%; background-color:#FFE997; cursor: pointer}
+
+td.a50 {text-align: center; width:50%; background-color:#908A74}
+td.a80 {text-align: center; width:80%; background-color:#908A74}
+td.a100 {text-align: center; width:100%; background-color:#908A74}
+td.c16 {text-align: center; width:16%; background-color:#d9edf7}
+td.o20 {text-align: center; width:20%; background-color:#FFE997}
+td.o25 {text-align: center; width:25%; background-color:#FFE997; cursor: pointer}
+td.o60 {text-align: center; width:80%; background-color:#FFE997}
+td.o100 {text-align: center; width:100%; background-color:#FFE997}
+td.v10 {text-align: center; width:10%; background-color:#EAECEE}
+td.v14 {text-align: center; width:14%; background-color:#EAECEE}
+td.v20 {text-align: center; width:20%; background-color:#EAECEE}
+td.v25 {text-align: center; width:25%; background-color:#EAECEE}
+td.v50 {text-align: center; width:50%; background-color:#EAECEE}
+td.l14 {text-align: left; width:14%; background-color:#d9edf7}
+td.l20 {text-align: left; width:20%; background-color:#d9edf7}
+td.l25 {text-align: left; width:25%; background-color:#d9edf7}
+td.l100 {text-align: left; width:100%; background-color:#d9edf7}
+td.w10 {text-align: center; width:10%; background-color:#FFFFFF}
+td.w14 {text-align: center; width:14%; background-color:#FFFFFF}
+td.w50 {text-align: center; width:50%; background-color:#FFFFFF}
+td.w80 {text-align: center; width:80%; background-color:#FFFFFF}
+td.wl80 {text-align: left; width:80%; background-color:#FFFFFF}
+hr {border-color:#EAECEE}
+mark{padding:.2em;background-color:#fcf8e3}
+markblue{padding:.2em;background-color:#fcf8e3;color:blue;}
+markred{padding:.2em;background-color:#fcf8e3;color:red;}
+h5 {width:100%; text-align:left; border-bottom: 1px solid #EAECEE; line-height:0.1em; margin:10px 0 5px;}
+h5 span {background:#fff; padding:0 2px;}
+
+:target {
+    display: block;    
+    position: relative;     
+    top: -100px;
+    visibility: hidden;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <span id="modal_data">test</span>
+  </div>
+</div>
+
+<div style="position:fixed; top:0; width:100%">
+	<div id="hdr_tbl" style="width:100%"></div>
+</div>
+<div id="Top"></div>
+  
+<div id="disp_tbl"></div>
+<div class="jtxt" id="srch_results" style="display:none;"></div>
+<div class="jtxt" id="disp_txt"></div>
+
+<script>
+
+var bible_version = 'w';
+var where_am_i = "b"
+var bible_book = 1
+var bible_chapter = 1
+var story_section = 1
+var story_chapter = 1
+var topic_section = 1
+var topic_chapter = 1
+var parallel_read = "wyn"
+
+//alert("loading scripts")
+
+</script>
+
+<script src="web_scripts_js/init_load.js"></script>
+<script src="web_scripts_js/main_scripts.js"></script>
+<script src="web_scripts_js/offsets_n_counts.js"></script>
+<script src="web_scripts_js/story_scripts.js"></script>
+<script src="data/story_table.js"></script>
+
+
+<script>
+
+// Get the modal
+var modal = document.getElementById("myModal");
+var txt_modal = document.getElementById("modal_data");
+// Get the <span> element that closes the modal
+var spanmodal = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+spanmodal.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<script>
+
+var bible_data_cache = {}; // Our global memory bank
+
+// This is the "Engine" that fetches the script
+function loadBookScript(version, book_name) {
+    return new Promise((resolve, reject) => {
+        let script = document.createElement('script');
+        // Ensure this path matches your folder structure exactly
+        script.src = `data/${version}/${book_name}.js`;
+
+        script.onload = () => {
+            console.log(`Successfully loaded: ${book_name}.js`);
+            resolve();
+        };
+
+        script.onerror = () => {
+            console.error(`Failed to load script: ${script.src}`);
+            reject();
+        };
+
+        document.head.appendChild(script);
+    });
+}
+
+// This handles the logic of checking the cache first
+async function showVerse(version, book_name, chapter) {
+    const book_id = `${version}_${book_name}`;
+    console.log("showVerse:" + book_id)
+
+    // 1. If not in memory, download the script and wait
+    if (!bible_data_cache[book_id]) {
+        try {
+            await loadBookScript(version, book_name);
+        } catch (e) {
+            return "Error: File could not be loaded.";
+        }
+    }
+
+    // 2. Access the array that the script just registered
+    try {
+        return bible_data_cache[book_id][chapter - 1];
+    } catch (e) {
+        return "Verse not found.";
+    }
+}
+
+
+// The function your table-builder calls
+async function chap_fetch(version, b_no, c_no) {
+    // We use 'await' here so it doesn't return a [object Promise]
+    let result = await showVerse(version, fetch_name(b_no), c_no);
+    return result;
+}
+
+if(lsTest())
+{
+    var var_coordinates = localStorage.getItem("all_coordinates");
+    if (var_coordinates != null) {
+        j = var_coordinates.split(":");
+        if (j.length == 9) {
+            if (["w","b","k","l"].includes(j[0])) {
+              bible_version = j[0]
+            };
+            if (["b","s","t"].includes(j[1])) {
+              where_am_i = j[1]
+            };
+            temp_val = parseInt(j[2],10)
+            if (temp_val >= 1 && temp_val <= 66) {
+              bible_book = temp_val
+              temp_val = parseInt(j[3],10)
+              bible_chapter = temp_val
+            };
+
+            temp_val = parseInt(j[4],10)
+            story_section = temp_val
+            temp_val = parseInt(j[5],10)
+            story_chapter = temp_val
+
+            temp_val = parseInt(j[6],10)
+            topic_section = temp_val
+            temp_val = parseInt(j[7],10)
+            topic_chapter = temp_val
+
+            parallel_read = j[8];
+        };
+        full_resume();
+    }
+    else
+    {
+		Introductionfn();
+        //alert(2)
+    };
+}
+else {
+	Introductionfn();
+    //alert(3)
+};
+
+function lsTest(){
+    var test = 'test';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
+
+function full_resume() {
+    switch(where_am_i) {
+    case "s":
+        story_open(1,story_section, story_chapter)
+        break;
+    case "t":
+        story_open(2,topic_section, topic_chapter)
+        break;
+    case "b":
+        chapter_open(bible_book, bible_chapter)
+        break;
+    default:
+        chapter_open(bible_book, bible_chapter)
+        break;
+    };
+};
+
+function set_co_ordinates() {
+    var var_coordinates = bible_version + ":" + where_am_i + ":" + bible_book + ":" + bible_chapter + ":" + story_section + ":" + story_chapter + ":" + topic_section + ":" + topic_chapter + ":" + parallel_read
+	if(lsTest()) {localStorage.setItem("all_coordinates",var_coordinates);};
+};
+
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
+</body></html>

@@ -1,0 +1,48 @@
+init_load
+==============
+Introductionfn()    in WEB_V_0_1.html
+disp_bible_help()   in WEB_V_0_1.html
+hide_disp_tbl()     in main_scripts.js
+story_resume()      in init_load.js & main_scripts.js
+
+main_scripts
+==============
+chapter_resume()    in init_load.js & options.js
+book_open()         in main_scripts.js
+chapter_open()      in main_scripts.js
+build_hdr()         in main_scripts.js
+build_tlr()         in main_scripts.js
+fetch_All()         in main_scripts.js
+displaytext2()      in main_scripts.js & common_scripts.js
+ClosePop()          in main_scripts.js
+chapter_tbl()       in main_scripts.js
+verse_tbl()         in main_scripts.js
+goto_verse()        in main_scripts.js
+AllBooks()          in main_scripts.js
+booklist_law()      in main_scripts.js
+booklist_minor()    in main_scripts.js
+booklist_history()  in main_scripts.js
+booklist_wisdom()   in main_scripts.js
+booklist_lxxmajor() in main_scripts.js
+booklist_nt()       in main_scripts.js
+
+options
+=======
+readMode()          in options.js, main_scripts.js & WEB_V_0_1.html
+compareMode()       in main_scripts.js
+showAll()           in main_scripts.js
+notesfn()           in main_scripts.js
+option_display()    in main_scripts.js
+hide_select_option()   in int_load.js, main_scripts.js & WEB_V_0_1.html
+set_options()       in WEB_V_0_1.html
+change_option()     in WEB_V_0_1.html, options.js
+
+offsets_n_counts
+================
+fetch_name(book_no) : returns "Genesis" format                          in main, common
+book_short(book_no) : returns "gen" format                              in main
+chapter_max(book_no) : returns chapter count                            in main
+verse_max(book_no, chapter_no) : returns verse count of the chapter     in main, common
+book_no_fetch(book_name) : returns book no if passed "gen" format       not used. But keeping for future commandline
+
+
