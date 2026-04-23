@@ -140,11 +140,6 @@ var topic_section = 1
 var topic_chapter = 1
 var parallel_read = "wyn"
 var web_chap = []; var bsb_chap = []; var kjv_chap = []; var ylt_chap = []; var lxx_chap = []; var xrf_chap = []; var nte_chap = [];
-var bsb_bk = 0;
-var kjv_bk = 0;
-var ylt_bk = 0;
-var lxx_bk = 0;
-var nte_bk = 0;
 
 //alert("loading scripts")
 
@@ -235,6 +230,7 @@ async function chap_fetch(version, b_no, c_no) {
 
 async function pop_chap(sumV, b_no, c_no) {
     // 1. Create an array of promises (don't use 'await' yet)
+    web_chap = []; bsb_chap = []; kjv_chap = []; ylt_chap = []; lxx_chap = []; nte_chap = []; xrf_chap = [];
     let promises = [];
 
     // We push the function calls into the array so they all start immediately
@@ -254,18 +250,8 @@ async function pop_chap(sumV, b_no, c_no) {
         // Run all your fetches
         // If ANY of them fail due to being offline, it will jump to the catch block
         await Promise.all(promises);
-        if (sumV.includes("bsb")) {bsb_bk = b_no};
-        if (sumV.includes("kjv")) {kjv_bk = b_no};
-        if (sumV.includes("ylt")) {ylt_bk = b_no};
-        if (sumV.includes("lxx")) {lxx_bk = b_no};
-        if (sumV.includes("nte")) {nte_bk = b_no};
     } catch (error) {
         // This only runs ONCE, even if 5 versions failed
-        if (sumV.includes("bsb") && bsb_bk != b_no) {bsb_chap = []};
-        if (sumV.includes("kjv") && kjv_bk != b_no) {kjv_chap = []};
-        if (sumV.includes("ylt") && ylt_bk != b_no) {ylt_chap = []};
-        if (sumV.includes("lxx") && lxx_bk != b_no) {lxx_chap = []};
-        if (sumV.includes("nte") && nte_bk != b_no) {nte_chap = []};
         alert("Connection lost. Some versions haven't been saved to your device yet. Try the WEB version.");
     };
 };
