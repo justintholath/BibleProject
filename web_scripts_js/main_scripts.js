@@ -176,12 +176,12 @@ async function fetch_chapter(x_b_no, x_c_no) {
     var Verse_sfx = "</u>";
     var sfx = '</font><br>'
     var maxverse = verse_max(x_b_no, x_c_no);
-    var kjvyes = 0; 
-    var webyes = 0; 
-    var bsbyes = 0; 
-    var yltyes = 0; 
-    var lxxyes = 0; 
-    var nteyes = 0;
+    kjvyes = 0;
+    webyes = 0;
+    bsbyes = 0;
+    yltyes = 0;
+    lxxyes = 0;
+    nteyes = 0;
     var mycount = 0;
     var tempstr = ""
     let sumV = ""
@@ -416,6 +416,7 @@ function verse_tbl() {
 
 function goto_verse(v_no) {
     verseloc = "#V" + v_no
+    alert(verseloc)
     document.getElementById("disp_tbl").style.display = 'none';
     document.getElementById("srch_results").style.display = 'none';
     window.location.href = (verseloc);

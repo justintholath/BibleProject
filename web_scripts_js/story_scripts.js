@@ -67,10 +67,16 @@ async function story_text(lvl, sect_no, chap_no) {
     var prevchap = "";
     var currchap = "";
 
+    kjvyes = 0;
+    bsbyes = 0;
+    yltyes = 0;
     let sumV = "web";
-    if  (bible_version == "b") {sumV = "bsb"};
-    if  (bible_version == "k") {sumV = "kjv"};
-    if  (bible_version == "y") {sumV = "ylt"};
+    webyes = 1;
+    if  (bible_version == "b") {sumV = "bsb"; webyes = 0; bsbyes = 1;};
+    if  (bible_version == "k") {sumV = "kjv"; webyes = 0; kjvyes = 1;};
+    if  (bible_version == "y") {sumV = "ylt"; webyes = 0; yltyes = 1;};
+
+
 
     for (h=0; h < vlen; h++) {
         verse_str = vlist[h]
@@ -92,22 +98,16 @@ async function story_text(lvl, sect_no, chap_no) {
                 x += '<font style="color:blue; cursor: pointer;">['
                 x += verse_number_click(jbk, jcp, jve) + "] </font>"
                 await pop_chap(sumV, jbk, jcp)
-                switch (bible_version) {
-                    case 'w':
-                        x += web_chap[jve - 1].substring(8);
-                        break;
-                    case 'b':
-                        x += bsb_chap[jve - 1].substring(8);
-                        break;
-                    case 'k':
-                        x += kjv_chap[jve - 1].substring(8);
-                        break;
-                    case 'y':
-                        x += ylt_chap[jve - 1].substring(8);
-                        break;
-                    default:
-                        x += web_chap[jve - 1].substring(8);
-                        break;
+                if (webyes == 1) {
+                    x += web_chap[jve - 1].substring(8);
+                } else if (bsbyes == 1) {
+                    x += bsb_chap[jve - 1].substring(8);
+                } else if (kjvyes == 1) {
+                    x += kjv_chap[jve - 1].substring(8);
+                } else if (yltyes == 1) {
+                    x += ylt_chap[jve - 1].substring(8);
+                } else {
+                    x += web_chap[jve - 1].substring(8);
                 };
                 x += '<br><br>';
                 continue;
@@ -121,22 +121,16 @@ async function story_text(lvl, sect_no, chap_no) {
                 for (vi = jve; vi <= kve; vi++) {
                     x += '<font style="color:blue; cursor: pointer;">['
                     x += verse_number_click(jbk, jcp, vi) + "] </font>"
-                    switch (bible_version) {
-                        case 'w':
-                            x += web_chap[vi - 1].substring(8);
-                            break;
-                        case 'b':
-                            x += bsb_chap[vi - 1].substring(8);
-                            break;
-                        case 'k':
-                            x += kjv_chap[vi - 1].substring(8);
-                            break;
-                        case 'y':
-                            x += ylt_chap[vi - 1].substring(8);
-                            break;
-                        default:
-                            x += web_chap[vi - 1].substring(8);
-                            break;
+                    if (webyes == 1) {
+                        x += web_chap[vi - 1].substring(8);
+                    } else if (bsbyes == 1) {
+                        x += bsb_chap[vi - 1].substring(8);
+                    } else if (kjvyes == 1) {
+                        x += kjv_chap[vi - 1].substring(8);
+                    } else if (yltyes == 1) {
+                        x += ylt_chap[vi - 1].substring(8);
+                    } else {
+                        x += web_chap[vi - 1].substring(8);
                     };
                 };
 			    x += '<br><br>';

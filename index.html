@@ -141,6 +141,12 @@ var topic_chapter = 1
 var parallel_read = "wyn"
 var web_chap = []; var bsb_chap = []; var kjv_chap = []; var ylt_chap = []; var lxx_chap = []; var xrf_chap = []; var nte_chap = [];
 var bible_data_cache = {}; // Our global memory bank
+var kjvyes = 0;
+var webyes = 0;
+var bsbyes = 0;
+var yltyes = 0;
+var lxxyes = 0;
+var nteyes = 0;
 
 //alert("loading scripts")
 
@@ -318,6 +324,12 @@ async function pop_chap(sumV, b_no, c_no) {
     } catch (error) {
         // This only runs ONCE, even if 5 versions failed
         alert("Connection lost. Some versions haven't been saved to your device yet. Try the WEB version.");
+        kjvyes = 0;
+        webyes = 1;
+        bsbyes = 0;
+        yltyes = 0;
+        lxxyes = 0;
+        nteyes = 0;
     };
 };
 
