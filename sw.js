@@ -110,3 +110,8 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
+
+self.addEventListener('activate', (event) => {
+    // Forces the service worker to take control of all open tabs immediately
+    event.waitUntil(clients.claim());
+});

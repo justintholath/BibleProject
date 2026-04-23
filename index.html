@@ -243,6 +243,7 @@ window.onclick = function(event) {
 
 // This is the "Engine" that fetches the script
 function loadBookScript(version, book_name) {
+
     return new Promise((resolve, reject) => {
         let script = document.createElement('script');
         // Ensure this path matches your folder structure exactly
@@ -298,8 +299,7 @@ async function pop_chap(sumV, b_no, c_no) {
     let promises = [];
 
     // We push the function calls into the array so they all start immediately
-    const web_book_id = "web_" + fetch_name(b_no);
-    if (sumV.includes("web")){web_chap = bible_data_cache[web_book_id][c_no - 1]};
+    if (sumV.includes("web")) promises.push(chap_fetch("web", b_no, c_no).then(data => web_chap = data));
     if (sumV.includes("bsb")) promises.push(chap_fetch("bsb", b_no, c_no).then(data => bsb_chap = data));
     if (sumV.includes("kjv")) promises.push(chap_fetch("kjv", b_no, c_no).then(data => kjv_chap = data));
     if (sumV.includes("ylt")) promises.push(chap_fetch("ylt", b_no, c_no).then(data => ylt_chap = data));
