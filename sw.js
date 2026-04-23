@@ -104,9 +104,6 @@ self.addEventListener('fetch', (event) => {
                 }
                 return networkResponse;
             });
-        }).catch(() => {
-            // Fallback if both fail (truly offline and not in cache)
-            return new Response("Offline: This content is not yet cached.");
         })
     );
 });
