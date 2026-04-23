@@ -1,29 +1,28 @@
 
-function book_open(x_b_no){
-    chapter_open(x_b_no, 0)
-}
+async function book_open(x_b_no){
+    var maxchap = chapter_max(x_b_no);
+    if (maxchap == 1) {
+        chapter_open(x_b_no, 1)
+    } else {
+        document.getElementById("hdr_tbl").innerHTML = "";
+        document.getElementById("disp_txt").innerHTML = "";
+        chapter_tbl(x_b_no,maxchap)
+        await pop_chap("webbsbkjvyltlxxnte", x_b_no, 1)
+    };
+};
 
 function chapter_open(x_b_no, x_c_no) {
     var maxchap = chapter_max(x_b_no);
-    var disp_tbl_flag = 0
-    if (x_c_no == 0 && maxchap > 1) {
-        disp_tbl_flag = 1
-    };
     if  (x_c_no > maxchap) {x_c_no = maxchap};
     if  (x_c_no == 0) {x_c_no = 1}
     build_hdr(x_b_no, x_c_no, maxchap);
     fetch_chapter(x_b_no, x_c_no);
-    if (disp_tbl_flag == 1) {
-        chapter_tbl(x_b_no,maxchap)
-    }
-    else {
-        hide_disp_tbl();
-    };
+    hide_disp_tbl();
     where_am_i = "b"
-    bible_book = x_b_no
-    bible_chapter = x_c_no
+    bible_book = x_b_no;
+    bible_chapter = x_c_no;
     set_co_ordinates()
-}
+};
 
 function build_hdr(book_no, chap_no, maxchap) {
 	var book_name = fetch_name(book_no);
@@ -358,26 +357,13 @@ function chapter_tbl(book_no, maxchap) {
         x += '</tr>';
     }
     x += '</table>'
-    x += '<table><tr>';
-    x += '<td class="w80"></td>';
-    x += '<td class="g20" onclick="hide_disp_tbl()"><b>Close Table</b></td>'
-    x += '</tr>';
-    x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
     window.scrollTo(0, 0)
-}
+};
 
 function verse_tbl() {
-    var x_b_no = 1;
-    var x_c_no = 1;
-    var maxverse = 1;
-    var tempString = var_coordinates;
-    if  (tempString != null && tempString.length == 6) {
-        x_b_no = parseInt(tempString.substring(0,2))
-        x_c_no = parseInt(tempString.substring(3,6));
-    };
-    maxverse = verse_max(x_b_no, x_c_no);
+    var maxverse = verse_max(bible_book, bible_chapter);
 
     var nbr_cols = 10
     var disp_class_no = "10"
@@ -403,11 +389,6 @@ function verse_tbl() {
         }
         x += '</tr>';
     }
-    x += '</table>'
-    x += '<table><tr>';
-    x += '<td class="w80"></td>';
-    x += '<td class="g20" onclick="hide_disp_tbl()"><b>Close Table</b></td>'
-    x += '</tr>';
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
