@@ -416,7 +416,6 @@ function verse_tbl() {
 
 function goto_verse(v_no) {
     verseloc = "#V" + v_no
-    alert(verseloc)
     document.getElementById("disp_tbl").style.display = 'none';
     document.getElementById("srch_results").style.display = 'none';
     window.location.href = (verseloc);
