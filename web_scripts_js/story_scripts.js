@@ -143,6 +143,7 @@ async function story_text(lvl, sect_no, chap_no) {
     document.getElementById("disp_txt").innerHTML = x;
     hide_disp_tbl();
     hide_results()
+    window.scrollTo(0, 0)
 };
 
 

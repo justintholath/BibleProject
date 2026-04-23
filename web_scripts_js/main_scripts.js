@@ -216,6 +216,9 @@ async function fetch_chapter(x_b_no, x_c_no) {
             break;
         };
     };
+    await pop_chap(sumV, x_b_no, x_c_no)
+
+    if (webyes == 1 && bsbyes == 0 && kjvyes == 0 && yltyes == 0 && lxxyes ==0 && nteyes == 0) {mycount = 1;};
     if (mycount == 1) {
         if (bsbyes == 1) {tempstr = "Berean Standard Bible "}
         if (webyes == 1) {tempstr = "World English Bible"}
@@ -233,8 +236,6 @@ async function fetch_chapter(x_b_no, x_c_no) {
     };
     var x = '<p><h2 style="text-align:center;">' + tempstr + '</h2>'
     x += '<h4>' + fetch_name(x_b_no) + " " + x_c_no + '</h4>'
-
-    await pop_chap(sumV, x_b_no, x_c_no)
 
     var i;
     for (i = 1; i<= maxverse; i++) {
@@ -272,7 +273,7 @@ async function fetch_chapter(x_b_no, x_c_no) {
     x += "<br><br><br><br><br></p>"
     document.getElementById("disp_txt").innerHTML = x;
     hide_results()
-    window.location.href = ("#Top");
+    window.scrollTo(0, 0);
 };
 
 async function displaytext2(bno, cno, vno) {
@@ -364,7 +365,7 @@ function chapter_tbl(book_no, maxchap) {
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
-    window.location.href = ("#Top");
+    window.scrollTo(0, 0)
 }
 
 function verse_tbl() {
@@ -410,15 +411,28 @@ function verse_tbl() {
     x += '</table>'
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
-    window.location.href = ("#Top");
+    window.scrollTo(0, 0)
     ClosePop()
 }
 
 function goto_verse(v_no) {
-    verseloc = "#V" + v_no
-    document.getElementById("disp_tbl").style.display = 'none';
-    document.getElementById("srch_results").style.display = 'none';
-    window.location.href = (verseloc);
+    const verseElement = document.getElementById("V" + v_no);
+
+    if (verseElement) {
+        // Hide the tables first
+        document.getElementById("disp_tbl").style.display = 'none';
+        document.getElementById("srch_results").style.display = 'none';
+
+        // Scroll with an offset to account for your fixed header
+        const headerOffset = 100; // Adjust this number based on your header height
+        const elementPosition = verseElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth" // Optional: makes it slide nicely
+        });
+    }
 };
 
 function AllBooks(book_no) {
@@ -446,7 +460,7 @@ function AllBooks(book_no) {
     };
     document.getElementById("disp_tbl").innerHTML = x;
     document.getElementById("disp_tbl").style.display = 'block';
-    window.location.href = ("#Top");
+    window.scrollTo(0, 0)
 };
 
 function fulllist_ot() {
