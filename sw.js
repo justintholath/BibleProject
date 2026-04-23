@@ -33,7 +33,7 @@ const STATIC_ASSETS = [
 './data/web/Haggai.js',
 './data/web/Zechariah.js',
 './data/web/Malachi.js',
-'./data/web/Psalm.js',
+'./data/web/Psalms.js',
 './data/web/Proverbs.js',
 './data/web/Job.js',
 './data/web/SongofSongs.js',

@@ -140,6 +140,7 @@ var topic_section = 1
 var topic_chapter = 1
 var parallel_read = "wyn"
 var web_chap = []; var bsb_chap = []; var kjv_chap = []; var ylt_chap = []; var lxx_chap = []; var xrf_chap = []; var nte_chap = [];
+var bible_data_cache = {}; // Our global memory bank
 
 //alert("loading scripts")
 
@@ -150,7 +151,72 @@ var web_chap = []; var bsb_chap = []; var kjv_chap = []; var ylt_chap = []; var 
 <script src="web_scripts_js/offsets_n_counts.js"></script>
 <script src="web_scripts_js/story_scripts.js"></script>
 <script src="data/story_table.js"></script>
-
+<script src="data/web/Genesis.js"></script>
+<script src="data/web/Exodus.js"></script>
+<script src="data/web/Leviticus.js"></script>
+<script src="data/web/Numbers.js"></script>
+<script src="data/web/Deuteronomy.js"></script>
+<script src="data/web/Joshua.js"></script>
+<script src="data/web/Judges.js"></script>
+<script src="data/web/1Samuel.js"></script>
+<script src="data/web/2Samuel.js"></script>
+<script src="data/web/1Kings.js"></script>
+<script src="data/web/2Kings.js"></script>
+<script src="data/web/Isaiah.js"></script>
+<script src="data/web/Jeremiah.js"></script>
+<script src="data/web/Ezekiel.js"></script>
+<script src="data/web/Hosea.js"></script>
+<script src="data/web/Joel.js"></script>
+<script src="data/web/Amos.js"></script>
+<script src="data/web/Obadiah.js"></script>
+<script src="data/web/Jonah.js"></script>
+<script src="data/web/Micah.js"></script>
+<script src="data/web/Nahum.js"></script>
+<script src="data/web/Habakkuk.js"></script>
+<script src="data/web/Zephaniah.js"></script>
+<script src="data/web/Haggai.js"></script>
+<script src="data/web/Zechariah.js"></script>
+<script src="data/web/Malachi.js"></script>
+<script src="data/web/Psalms.js"></script>
+<script src="data/web/Proverbs.js"></script>
+<script src="data/web/Job.js"></script>
+<script src="data/web/SongofSongs.js"></script>
+<script src="data/web/Ruth.js"></script>
+<script src="data/web/Lamentations.js"></script>
+<script src="data/web/Ecclesiastes.js"></script>
+<script src="data/web/Esther.js"></script>
+<script src="data/web/Daniel.js"></script>
+<script src="data/web/Ezra.js"></script>
+<script src="data/web/Nehemiah.js"></script>
+<script src="data/web/1Chronicles.js"></script>
+<script src="data/web/2Chronicles.js"></script>
+<script src="data/web/Matthew.js"></script>
+<script src="data/web/Mark.js"></script>
+<script src="data/web/Luke.js"></script>
+<script src="data/web/John.js"></script>
+<script src="data/web/Acts.js"></script>
+<script src="data/web/Romans.js"></script>
+<script src="data/web/1Corinthians.js"></script>
+<script src="data/web/2Corinthians.js"></script>
+<script src="data/web/Galatians.js"></script>
+<script src="data/web/Ephesians.js"></script>
+<script src="data/web/Philippians.js"></script>
+<script src="data/web/Colossians.js"></script>
+<script src="data/web/1Thessalonians.js"></script>
+<script src="data/web/2Thessalonians.js"></script>
+<script src="data/web/1Timothy.js"></script>
+<script src="data/web/2Timothy.js"></script>
+<script src="data/web/Titus.js"></script>
+<script src="data/web/Philemon.js"></script>
+<script src="data/web/Hebrews.js"></script>
+<script src="data/web/James.js"></script>
+<script src="data/web/1Peter.js"></script>
+<script src="data/web/2Peter.js"></script>
+<script src="data/web/1John.js"></script>
+<script src="data/web/2John.js"></script>
+<script src="data/web/3John.js"></script>
+<script src="data/web/Jude.js"></script>
+<script src="data/web/Revelation.js"></script>
 
 <script>
 
@@ -174,8 +240,6 @@ window.onclick = function(event) {
 </script>
 
 <script>
-
-var bible_data_cache = {}; // Our global memory bank
 
 // This is the "Engine" that fetches the script
 function loadBookScript(version, book_name) {
@@ -234,7 +298,8 @@ async function pop_chap(sumV, b_no, c_no) {
     let promises = [];
 
     // We push the function calls into the array so they all start immediately
-    if (sumV.includes("web")) promises.push(chap_fetch("web", b_no, c_no).then(data => web_chap = data));
+    const web_book_id = "web_" + fetch_name(b_no);
+    if (sumV.includes("web")){web_chap = bible_data_cache[web_book_id][c_no - 1]};
     if (sumV.includes("bsb")) promises.push(chap_fetch("bsb", b_no, c_no).then(data => bsb_chap = data));
     if (sumV.includes("kjv")) promises.push(chap_fetch("kjv", b_no, c_no).then(data => kjv_chap = data));
     if (sumV.includes("ylt")) promises.push(chap_fetch("ylt", b_no, c_no).then(data => ylt_chap = data));
