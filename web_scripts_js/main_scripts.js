@@ -29,7 +29,7 @@ function build_hdr(book_no, chap_no, maxchap) {
     var x = '<table><tr>';
     x += ' <td class="c20" onclick="AllBooks(' + book_no + ')">' + book_name + '</td>';
     x += ' <td class="c20" onclick="chapter_tbl(' + book_no + ',' + maxchap + ')">' + chap_no + '</td>';
-    x += ' <td class="c20" onclick="display_menu(1)">Settings</td>';
+    x += ' <td class="c20" onclick="display_menu()">Settings</td>';
 	var nextchap = chap_no + 1;
 	var prevchap = chap_no - 1;
     if (chap_no == 1) {
@@ -51,58 +51,51 @@ function build_hdr(book_no, chap_no, maxchap) {
     document.getElementById("hdr_tbl").innerHTML = x;
 };
 
-function display_menu(Type) {
+function display_menu() {
 	var x = '<table><tr>';
     x += '<td class="c25" onclick="Navigate(1)">Home</td>';
-    if (Type == 1) {
-        x += '<td class="c25" onclick="Navigate(2)">' + story_names(1) + '</td>'
-    }
-    else {
-        x += '<td class="c25" onclick="Navigate(3)">Bible</td>'
-    };
+    x += '<td class="c25" onclick="Navigate(2)">' + story_names(1) + '</td>'
     x += '<td class="c25" onclick="Navigate(4)">Help</td>';
     x += '<td class="c25" onclick="ClosePop()">Close</td>';
     x += '</tr></table>';
-    x += '<br>'
+
+    x += '<br> Choose the Bible version <br> <br>'
 	x += '<table><tr>';
-    x += ' <td class="c25" onclick="Read(' + "'b'" +  ')">BSB</td>';
     x += ' <td class="c25" onclick="Read(' + "'w'" + ')">WEB</td>';
+    x += ' <td class="c25" onclick="Read(' + "'b'" +  ')">BSB</td>';
     x += ' <td class="c25" onclick="Read(' + "'k'" + ')">KJV</td>';
     x += ' <td class="c25" onclick="Read(' + "'y'" + ')">YLT</td>';
     x += '</tr></table>';
+
     x += '<br>'
-    if (Type == 1) {
-        x += '<table><tr>'
-        x += '<td class="w14">WEB <input id="opt1_web" type="checkbox" class="jchk"></td>'
-        x += '<td class="w14">BSB <input id="opt1_bsb" type="checkbox" class="jchk"></td>'
-        x += '<td class="w14">KJV <input id="opt1_kjv" type="checkbox" class="jchk"></td>'
-        x += '<td class="w14">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
-        x += '<td class="w14">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
-        x += '<td class="w14">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
-        x += '</tr></table>';
-        x += '<br>'
-        x += '<table><tr>'
-        x += '<td class="o50" onclick="verse_tbl()">Select Verse</td>';
-        x += '<td class="c50" onclick="set_option()">Parallel Bible</td>';
-        x += '</tr></table>';
-    };
+    x += '<table><tr>'
+    x += '<td class="w14">WEB <input id="opt1_web" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">BSB <input id="opt1_bsb" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">KJV <input id="opt1_kjv" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">YLT <input id="opt1_ylt" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">LXX <input id="opt1_lxx" type="checkbox" class="jchk"></td>'
+    x += '<td class="w14">Notes <input id="opt1_nte" type="checkbox" class="jchk"></td>'
+    x += '</tr></table>';
+    x += '<br>'
+    x += '<table><tr>'
+    x += '<td class="o50" onclick="verse_tbl()">Select Verse</td>';
+    x += '<td class="c50" onclick="set_option()">Parallel Bible</td>';
+    x += '</tr></table>';
 /*    alert(x); */
     txt_modal.innerHTML = x;
 
-    if (Type == 1) {
-        var var_opt1_bsb = document.getElementById("opt1_bsb");
-        var var_opt1_web = document.getElementById("opt1_web");
-        var var_opt1_kjv = document.getElementById("opt1_kjv");
-        var var_opt1_ylt = document.getElementById("opt1_ylt");
-        var var_opt1_lxx = document.getElementById("opt1_lxx");
-        var var_opt1_nte = document.getElementById("opt1_nte");
-        if (parallel_read.includes("w")) {var_opt1_web.checked = true}
-        if (parallel_read.includes("b")) {var_opt1_bsb.checked = true}
-        if (parallel_read.includes("k")) {var_opt1_kjv.checked = true}
-        if (parallel_read.includes("y")) {var_opt1_ylt.checked = true}
-        if (parallel_read.includes("l")) {var_opt1_lxx.checked = true}
-        if (parallel_read.includes("n")) {var_opt1_nte.checked = true}
-    };
+    var var_opt1_bsb = document.getElementById("opt1_bsb");
+    var var_opt1_web = document.getElementById("opt1_web");
+    var var_opt1_kjv = document.getElementById("opt1_kjv");
+    var var_opt1_ylt = document.getElementById("opt1_ylt");
+    var var_opt1_lxx = document.getElementById("opt1_lxx");
+    var var_opt1_nte = document.getElementById("opt1_nte");
+    if (parallel_read.includes("w")) {var_opt1_web.checked = true}
+    if (parallel_read.includes("b")) {var_opt1_bsb.checked = true}
+    if (parallel_read.includes("k")) {var_opt1_kjv.checked = true}
+    if (parallel_read.includes("y")) {var_opt1_ylt.checked = true}
+    if (parallel_read.includes("l")) {var_opt1_lxx.checked = true}
+    if (parallel_read.includes("n")) {var_opt1_nte.checked = true}
     modal.style.display = "block";
 };
 

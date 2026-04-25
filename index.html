@@ -131,6 +131,7 @@ h5 span {background:#fff; padding:0 2px;}
 <script>
 
 var bible_version = 'w';
+var story_version = 'b';
 var where_am_i = "b"
 var bible_book = 1
 var bible_chapter = 1
@@ -157,72 +158,139 @@ var nteyes = 0;
 <script src="web_scripts_js/offsets_n_counts.js"></script>
 <script src="web_scripts_js/story_scripts.js"></script>
 <script src="data/story_table.js"></script>
-<script src="data/web/Genesis.js"></script>
-<script src="data/web/Exodus.js"></script>
-<script src="data/web/Leviticus.js"></script>
-<script src="data/web/Numbers.js"></script>
-<script src="data/web/Deuteronomy.js"></script>
-<script src="data/web/Joshua.js"></script>
-<script src="data/web/Judges.js"></script>
-<script src="data/web/1Samuel.js"></script>
-<script src="data/web/2Samuel.js"></script>
-<script src="data/web/1Kings.js"></script>
-<script src="data/web/2Kings.js"></script>
-<script src="data/web/Isaiah.js"></script>
-<script src="data/web/Jeremiah.js"></script>
-<script src="data/web/Ezekiel.js"></script>
-<script src="data/web/Hosea.js"></script>
-<script src="data/web/Joel.js"></script>
-<script src="data/web/Amos.js"></script>
-<script src="data/web/Obadiah.js"></script>
-<script src="data/web/Jonah.js"></script>
-<script src="data/web/Micah.js"></script>
-<script src="data/web/Nahum.js"></script>
-<script src="data/web/Habakkuk.js"></script>
-<script src="data/web/Zephaniah.js"></script>
-<script src="data/web/Haggai.js"></script>
-<script src="data/web/Zechariah.js"></script>
-<script src="data/web/Malachi.js"></script>
-<script src="data/web/Psalms.js"></script>
-<script src="data/web/Proverbs.js"></script>
-<script src="data/web/Job.js"></script>
-<script src="data/web/SongofSongs.js"></script>
-<script src="data/web/Ruth.js"></script>
-<script src="data/web/Lamentations.js"></script>
-<script src="data/web/Ecclesiastes.js"></script>
-<script src="data/web/Esther.js"></script>
-<script src="data/web/Daniel.js"></script>
-<script src="data/web/Ezra.js"></script>
-<script src="data/web/Nehemiah.js"></script>
-<script src="data/web/1Chronicles.js"></script>
-<script src="data/web/2Chronicles.js"></script>
-<script src="data/web/Matthew.js"></script>
-<script src="data/web/Mark.js"></script>
-<script src="data/web/Luke.js"></script>
-<script src="data/web/John.js"></script>
-<script src="data/web/Acts.js"></script>
-<script src="data/web/Romans.js"></script>
-<script src="data/web/1Corinthians.js"></script>
-<script src="data/web/2Corinthians.js"></script>
-<script src="data/web/Galatians.js"></script>
-<script src="data/web/Ephesians.js"></script>
-<script src="data/web/Philippians.js"></script>
-<script src="data/web/Colossians.js"></script>
-<script src="data/web/1Thessalonians.js"></script>
-<script src="data/web/2Thessalonians.js"></script>
-<script src="data/web/1Timothy.js"></script>
-<script src="data/web/2Timothy.js"></script>
-<script src="data/web/Titus.js"></script>
-<script src="data/web/Philemon.js"></script>
-<script src="data/web/Hebrews.js"></script>
-<script src="data/web/James.js"></script>
-<script src="data/web/1Peter.js"></script>
-<script src="data/web/2Peter.js"></script>
-<script src="data/web/1John.js"></script>
-<script src="data/web/2John.js"></script>
-<script src="data/web/3John.js"></script>
-<script src="data/web/Jude.js"></script>
-<script src="data/web/Revelation.js"></script>
+
+<script src="data/web/Genesis.js" defer></script>
+<script src="data/web/Exodus.js" defer></script>
+<script src="data/web/Leviticus.js" defer></script>
+<script src="data/web/Numbers.js" defer></script>
+<script src="data/web/Deuteronomy.js" defer></script>
+<script src="data/web/Joshua.js" defer></script>
+<script src="data/web/Judges.js" defer></script>
+<script src="data/web/1Samuel.js" defer></script>
+<script src="data/web/2Samuel.js" defer></script>
+<script src="data/web/1Kings.js" defer></script>
+<script src="data/web/2Kings.js" defer></script>
+<script src="data/web/Isaiah.js" defer></script>
+<script src="data/web/Jeremiah.js" defer></script>
+<script src="data/web/Ezekiel.js" defer></script>
+<script src="data/web/Hosea.js" defer></script>
+<script src="data/web/Joel.js" defer></script>
+<script src="data/web/Amos.js" defer></script>
+<script src="data/web/Obadiah.js" defer></script>
+<script src="data/web/Jonah.js" defer></script>
+<script src="data/web/Micah.js" defer></script>
+<script src="data/web/Nahum.js" defer></script>
+<script src="data/web/Habakkuk.js" defer></script>
+<script src="data/web/Zephaniah.js" defer></script>
+<script src="data/web/Haggai.js" defer></script>
+<script src="data/web/Zechariah.js" defer></script>
+<script src="data/web/Malachi.js" defer></script>
+<script src="data/web/Psalms.js" defer></script>
+<script src="data/web/Proverbs.js" defer></script>
+<script src="data/web/Job.js" defer></script>
+<script src="data/web/SongofSongs.js" defer></script>
+<script src="data/web/Ruth.js" defer></script>
+<script src="data/web/Lamentations.js" defer></script>
+<script src="data/web/Ecclesiastes.js" defer></script>
+<script src="data/web/Esther.js" defer></script>
+<script src="data/web/Daniel.js" defer></script>
+<script src="data/web/Ezra.js" defer></script>
+<script src="data/web/Nehemiah.js" defer></script>
+<script src="data/web/1Chronicles.js" defer></script>
+<script src="data/web/2Chronicles.js" defer></script>
+<script src="data/web/Matthew.js" defer></script>
+<script src="data/web/Mark.js" defer></script>
+<script src="data/web/Luke.js" defer></script>
+<script src="data/web/John.js" defer></script>
+<script src="data/web/Acts.js" defer></script>
+<script src="data/web/Romans.js" defer></script>
+<script src="data/web/1Corinthians.js" defer></script>
+<script src="data/web/2Corinthians.js" defer></script>
+<script src="data/web/Galatians.js" defer></script>
+<script src="data/web/Ephesians.js" defer></script>
+<script src="data/web/Philippians.js" defer></script>
+<script src="data/web/Colossians.js" defer></script>
+<script src="data/web/1Thessalonians.js" defer></script>
+<script src="data/web/2Thessalonians.js" defer></script>
+<script src="data/web/1Timothy.js" defer></script>
+<script src="data/web/2Timothy.js" defer></script>
+<script src="data/web/Titus.js" defer></script>
+<script src="data/web/Philemon.js" defer></script>
+<script src="data/web/Hebrews.js" defer></script>
+<script src="data/web/James.js" defer></script>
+<script src="data/web/1Peter.js" defer></script>
+<script src="data/web/2Peter.js" defer></script>
+<script src="data/web/1John.js" defer></script>
+<script src="data/web/2John.js" defer></script>
+<script src="data/web/3John.js" defer></script>
+<script src="data/web/Jude.js" defer></script>
+<script src="data/web/Revelation.js" defer></script>
+<script src="data/bsb/Genesis.js" defer></script>
+<script src="data/bsb/Exodus.js" defer></script>
+<script src="data/bsb/Leviticus.js" defer></script>
+<script src="data/bsb/Numbers.js" defer></script>
+<script src="data/bsb/Deuteronomy.js" defer></script>
+<script src="data/bsb/Joshua.js" defer></script>
+<script src="data/bsb/Judges.js" defer></script>
+<script src="data/bsb/1Samuel.js" defer></script>
+<script src="data/bsb/2Samuel.js" defer></script>
+<script src="data/bsb/1Kings.js" defer></script>
+<script src="data/bsb/2Kings.js" defer></script>
+<script src="data/bsb/Isaiah.js" defer></script>
+<script src="data/bsb/Jeremiah.js" defer></script>
+<script src="data/bsb/Ezekiel.js" defer></script>
+<script src="data/bsb/Hosea.js" defer></script>
+<script src="data/bsb/Joel.js" defer></script>
+<script src="data/bsb/Amos.js" defer></script>
+<script src="data/bsb/Obadiah.js" defer></script>
+<script src="data/bsb/Jonah.js" defer></script>
+<script src="data/bsb/Micah.js" defer></script>
+<script src="data/bsb/Nahum.js" defer></script>
+<script src="data/bsb/Habakkuk.js" defer></script>
+<script src="data/bsb/Zephaniah.js" defer></script>
+<script src="data/bsb/Haggai.js" defer></script>
+<script src="data/bsb/Zechariah.js" defer></script>
+<script src="data/bsb/Malachi.js" defer></script>
+<script src="data/bsb/Psalms.js" defer></script>
+<script src="data/bsb/Proverbs.js" defer></script>
+<script src="data/bsb/Job.js" defer></script>
+<script src="data/bsb/SongofSongs.js" defer></script>
+<script src="data/bsb/Ruth.js" defer></script>
+<script src="data/bsb/Lamentations.js" defer></script>
+<script src="data/bsb/Ecclesiastes.js" defer></script>
+<script src="data/bsb/Esther.js" defer></script>
+<script src="data/bsb/Daniel.js" defer></script>
+<script src="data/bsb/Ezra.js" defer></script>
+<script src="data/bsb/Nehemiah.js" defer></script>
+<script src="data/bsb/1Chronicles.js" defer></script>
+<script src="data/bsb/2Chronicles.js" defer></script>
+<script src="data/bsb/Matthew.js" defer></script>
+<script src="data/bsb/Mark.js" defer></script>
+<script src="data/bsb/Luke.js" defer></script>
+<script src="data/bsb/John.js" defer></script>
+<script src="data/bsb/Acts.js" defer></script>
+<script src="data/bsb/Romans.js" defer></script>
+<script src="data/bsb/1Corinthians.js" defer></script>
+<script src="data/bsb/2Corinthians.js" defer></script>
+<script src="data/bsb/Galatians.js" defer></script>
+<script src="data/bsb/Ephesians.js" defer></script>
+<script src="data/bsb/Philippians.js" defer></script>
+<script src="data/bsb/Colossians.js" defer></script>
+<script src="data/bsb/1Thessalonians.js" defer></script>
+<script src="data/bsb/2Thessalonians.js" defer></script>
+<script src="data/bsb/1Timothy.js" defer></script>
+<script src="data/bsb/2Timothy.js" defer></script>
+<script src="data/bsb/Titus.js" defer></script>
+<script src="data/bsb/Philemon.js" defer></script>
+<script src="data/bsb/Hebrews.js" defer></script>
+<script src="data/bsb/James.js" defer></script>
+<script src="data/bsb/1Peter.js" defer></script>
+<script src="data/bsb/2Peter.js" defer></script>
+<script src="data/bsb/1John.js" defer></script>
+<script src="data/bsb/2John.js" defer></script>
+<script src="data/bsb/3John.js" defer></script>
+<script src="data/bsb/Jude.js" defer></script>
+<script src="data/bsb/Revelation.js" defer></script>
 
 <script>
 
@@ -323,13 +391,37 @@ async function pop_chap(sumV, b_no, c_no) {
         await Promise.all(promises);
     } catch (error) {
         // This only runs ONCE, even if 5 versions failed
-        alert("Connection lost. Some versions haven't been saved to your device yet. Try the WEB version.");
-        kjvyes = 0;
-        webyes = 1;
-        bsbyes = 0;
-        yltyes = 0;
-        lxxyes = 0;
-        nteyes = 0;
+        alert("Connection lost. Some versions haven't been saved to your device yet. Try the WEB or BSB version.");
+
+        if (where_am_i == "b") {
+            if (bible_version == 'b') {
+                webyes = 0;
+                bsbyes = 1;
+                kjvyes = 0;
+                yltyes = 0;
+                lxxyes = 0;
+                nteyes = 0;
+            } else {
+                webyes = 1;
+                bsbyes = 0;
+                kjvyes = 0;
+                yltyes = 0;
+                lxxyes = 0;
+                nteyes = 0;
+            };
+        } else {
+            if (story_version == 'w') {
+                webyes = 1;
+                bsbyes = 0;
+                kjvyes = 0;
+                yltyes = 0;
+            } else {
+                webyes = 0;
+                bsbyes = 1;
+                kjvyes = 0;
+                yltyes = 0;
+            };
+        };
     };
 };
 
@@ -338,7 +430,7 @@ if(lsTest())
     var var_coordinates = localStorage.getItem("all_coordinates");
     if (var_coordinates != null) {
         j = var_coordinates.split(":");
-        if (j.length == 9) {
+        if (j.length == 10) {
             if (["w","b","k","l"].includes(j[0])) {
               bible_version = j[0]
             };
@@ -363,6 +455,9 @@ if(lsTest())
             topic_chapter = temp_val
 
             parallel_read = j[8];
+            if (["w","b","k","l"].includes(j[9])) {
+              story_version = j[9]
+            };
         };
         full_resume();
     }
@@ -406,7 +501,7 @@ function full_resume() {
 };
 
 function set_co_ordinates() {
-    var var_coordinates = bible_version + ":" + where_am_i + ":" + bible_book + ":" + bible_chapter + ":" + story_section + ":" + story_chapter + ":" + topic_section + ":" + topic_chapter + ":" + parallel_read
+    var var_coordinates = bible_version + ":" + where_am_i + ":" + bible_book + ":" + bible_chapter + ":" + story_section + ":" + story_chapter + ":" + topic_section + ":" + topic_chapter + ":" + parallel_read + ":" + story_version
 	if(lsTest()) {localStorage.setItem("all_coordinates",var_coordinates);};
 };
 

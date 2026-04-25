@@ -40,7 +40,7 @@ function story_hdr(lvl, sect_no, chap_no) {
 
 	var y = '<table><tr>';
     y += ' <td ' + trlr_class + ' onclick="story_books(' + lvl + ',' + sect_no + ',' + sect_no + ',' + chap_no + ')">List</td>';
-    y += ' <td ' + trlr_class + 'onclick="display_menu(2)">Settings</td>';
+    y += ' <td ' + trlr_class + 'onclick="display_story_menu()">Settings</td>';
     if (sect_no == 1 && chap_no == 1) {
 		y += ' <td class="v25"></td>';
 	}
@@ -57,85 +57,104 @@ function story_hdr(lvl, sect_no, chap_no) {
     document.getElementById("hdr_tbl").innerHTML = y;
 };
 
+function display_story_menu() {
+    var x = '<table><tr>';
+    x += '<td class="c25" onclick="Navigate(1)">Home</td>';
+    x += '<td class="c25" onclick="Navigate(3)">Bible</td>'
+    x += '<td class="c25" onclick="Navigate(4)">Help</td>';
+    x += '<td class="c25" onclick="ClosePop()">Close</td>';
+    x += '</tr></table>';
+    x += '<br> Choose the version <br><br> '
+    x += '<table><tr>';
+    x += ' <td class="c25" onclick="Read_story(' + "'b'" + ')">BSB</td>';
+    x += ' <td class="c25" onclick="Read_story(' + "'w'" + ')">WEB</td>';
+    x += ' <td class="c25" onclick="Read_story(' + "'k'" + ')">KJV</td>';
+    x += ' <td class="c25" onclick="Read_story(' + "'y'" + ')">YLT</td>';
+    x += '</tr></table>';
+    x += '<br>'
+    /*    alert(x); */
+    txt_modal.innerHTML = x;
+    modal.style.display = "block";
+};
+
+function Read_story(in_val) {
+    story_version = in_val
+    ClosePop()
+    full_resume()
+};
+
 async function story_text(lvl, sect_no, chap_no) {
     var vlist = chapter_verses(lvl, sect_no, chap_no)
-    var vlen = vlist.length
     var verselist = ""
     var m = 0
-    var x = "<br><h2>" + sect_no + ". " + section_header(lvl, sect_no) + "</h2>";
+    var x = '<br><h2 style="text-align: center;">' + sect_no + ". " + section_header(lvl, sect_no) + "</h2>";
     x += "<h3>" + chap_no + ". " + section_chapter(lvl, sect_no, chap_no) + "</h3>";
     var prevchap = "";
     var currchap = "";
 
     kjvyes = 0;
-    bsbyes = 0;
+    webyes = 0;
     yltyes = 0;
-    let sumV = "web";
-    webyes = 1;
-    if  (bible_version == "b") {sumV = "bsb"; webyes = 0; bsbyes = 1;};
-    if  (bible_version == "k") {sumV = "kjv"; webyes = 0; kjvyes = 1;};
-    if  (bible_version == "y") {sumV = "ylt"; webyes = 0; yltyes = 1;};
+    let sumV = "bsb";
+    bsbyes = 1;
+    if  (story_version == "w") {sumV = "web"; bsbyes = 0; webyes = 1;};
+    if  (story_version == "k") {sumV = "kjv"; bsbyes = 0; kjvyes = 1;};
+    if  (story_version == "y") {sumV = "ylt"; bsbyes = 0; yltyes = 1;};
 
-
-
-    for (h=0; h < vlen; h++) {
-        verse_str = vlist[h]
-        verselist = verse_str.split("|");
-        x += '<h4>' + verselist[0] + '</h4>';
-        m = verselist.length;
-        x += "<p>"
-        for (i=1; i< m; i++) {
-            currchap = verselist[i].substring(0,5)
-            if (currchap !== prevchap) {
-                x += '<font style="color:blue; cursor: pointer;">['
-                x += chapter_xpnd(currchap) + "] </font><br><br>";
-                prevchap = currchap;
+    verse_str = vlist
+    verselist = verse_str.split("|");
+    m = verselist.length;
+    x += "<p>"
+    for (i=0; i< m; i++) {
+        currchap = verselist[i].substring(0,5)
+        if (currchap !== prevchap) {
+            x += '<h4>' + chapter_xpnd(currchap) + "</h4>";
+            prevchap = currchap;
+        };
+        if  (verselist[i].length == 8) {
+            jbk = parseInt(verselist[i].substring(0,2))
+            jcp = parseInt(verselist[i].substring(2,5))
+            jve = parseInt(verselist[i].substring(5,8))
+            x += '<font style="color:blue; cursor: pointer;">['
+            x += verse_number_click(jbk, jcp, jve) + "] </font>"
+            await pop_chap(sumV, jbk, jcp)
+            if (webyes == 1) {
+                x += web_chap[jve - 1].substring(8);
+            } else if (bsbyes == 1) {
+                x += bsb_chap[jve - 1].substring(8);
+            } else if (kjvyes == 1) {
+                x += kjv_chap[jve - 1].substring(8);
+            } else if (yltyes == 1) {
+                x += ylt_chap[jve - 1].substring(8);
+            } else {
+                x += web_chap[jve - 1].substring(8);
             };
-            if  (verselist[i].length == 8) {
-                jbk = parseInt(verselist[i].substring(0,2))
-                jcp = parseInt(verselist[i].substring(2,5))
-                jve = parseInt(verselist[i].substring(5,8))
+            x += '<br><br>';
+            continue;
+        };
+        if  (verselist[i].length > 8 && verselist[i].length <= 11) {
+            jbk = parseInt(verselist[i].substring(0,2))
+            jcp = parseInt(verselist[i].substring(2,5))
+            jve = parseInt(verselist[i].substring(5,8))
+            kve = parseInt(verselist[i].substring(8))
+            await pop_chap(sumV, jbk, jcp)
+            for (vi = jve; vi <= kve; vi++) {
                 x += '<font style="color:blue; cursor: pointer;">['
-                x += verse_number_click(jbk, jcp, jve) + "] </font>"
-                await pop_chap(sumV, jbk, jcp)
+                x += verse_number_click(jbk, jcp, vi) + "] </font>"
                 if (webyes == 1) {
-                    x += web_chap[jve - 1].substring(8);
+                    x += web_chap[vi - 1].substring(8);
                 } else if (bsbyes == 1) {
-                    x += bsb_chap[jve - 1].substring(8);
+                    x += bsb_chap[vi - 1].substring(8);
                 } else if (kjvyes == 1) {
-                    x += kjv_chap[jve - 1].substring(8);
+                    x += kjv_chap[vi - 1].substring(8);
                 } else if (yltyes == 1) {
-                    x += ylt_chap[jve - 1].substring(8);
+                    x += ylt_chap[vi - 1].substring(8);
                 } else {
-                    x += web_chap[jve - 1].substring(8);
+                    x += web_chap[vi - 1].substring(8);
                 };
-                x += '<br><br>';
-                continue;
             };
-            if  (verselist[i].length > 8 && verselist[i].length <= 11) {
-                jbk = parseInt(verselist[i].substring(0,2))
-                jcp = parseInt(verselist[i].substring(2,5))
-                jve = parseInt(verselist[i].substring(5,8))
-                kve = parseInt(verselist[i].substring(8))
-                await pop_chap(sumV, jbk, jcp)
-                for (vi = jve; vi <= kve; vi++) {
-                    x += '<font style="color:blue; cursor: pointer;">['
-                    x += verse_number_click(jbk, jcp, vi) + "] </font>"
-                    if (webyes == 1) {
-                        x += web_chap[vi - 1].substring(8);
-                    } else if (bsbyes == 1) {
-                        x += bsb_chap[vi - 1].substring(8);
-                    } else if (kjvyes == 1) {
-                        x += kjv_chap[vi - 1].substring(8);
-                    } else if (yltyes == 1) {
-                        x += ylt_chap[vi - 1].substring(8);
-                    } else {
-                        x += web_chap[vi - 1].substring(8);
-                    };
-                };
-			    x += '<br><br>';
-                continue;
-            };
+            x += '<br><br>';
+            continue;
         };
     };
 	x += "<br><br><br><br><br></p>"
@@ -210,12 +229,8 @@ function story_books(lvl, curr_sect, sect_no, chap_no) {
 function chapter_xpnd(instr) {
     var x_bk = parseInt(instr.substring(0,2))
     var x_ch = parseInt(instr.substring(2,5))
-    var tmpstr = fetch_name(x_bk) + " " +  x_ch;
 
-    var clickstr = '<span onclick="chapter_open(' + x_bk + ',' + x_ch + ',0)">';
-    clickstr += '<u>' + tmpstr + '</u></span>'
-        
-    return clickstr;
+    return fetch_name(x_bk) + " " +  x_ch;
 };
 
 function verse_number_xpnd(instr) {
